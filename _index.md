@@ -14,6 +14,7 @@ Central map for the rating.cards doc system. AI agents: read this file during ev
 | [product/owner-flows.md](./product/owner-flows.md) | product | onboarding, sms, billing, multi-location, managers | true | refactor-only |
 | [product/admin-flows.md](./product/admin-flows.md) | product | admin, devices | true | refactor-only |
 | [product/end-customer-flow.md](./product/end-customer-flow.md) | product | redirects, devices | true | refactor-only |
+| [product/shop.md](./product/shop.md) | product | shop | true | refactor-only |
 | [architecture/system-overview.md](./architecture/system-overview.md) | architecture | admin, multi-location | true | refactor-only |
 | [architecture/devices-nfc-qr.md](./architecture/devices-nfc-qr.md) | architecture | devices, redirects | true | refactor-only |
 | [integrations/stripe.md](./integrations/stripe.md) | integration | billing | false | unless Stripe contract changes |
@@ -39,6 +40,7 @@ Central map for the rating.cards doc system. AI agents: read this file during ev
 | `billing` | `src/components/settings/Billing*`, `stripe-webhook`, `create-checkout-session` | business-model, owner-flows, integrations/stripe, sales-brief |
 | `admin` | `src/pages/AdminPage`, `src/components/admin/**`, `admin-*` functions | admin-flows, product-capabilities |
 | `email` | `send-weekly-pulse`, `_shared/emails/**` | owner-flows, product-capabilities, sales-brief |
+| `shop` | `rating-cards-shop/**` (separate repo), `supabase/functions/shop-*` | **product/shop.md**, customer-journey, integrations/stripe, integrations/google-gbp, sales-brief |
 
 ## 3. Auto-sync policy
 
