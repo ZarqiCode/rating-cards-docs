@@ -64,9 +64,10 @@ Set on the shop edge functions (not Next.js `.env.local`):
 | `STRIPE_SECRET_KEY` | Stripe API (may match app if same account) |
 | `SHOP_STRIPE_WEBHOOK_SECRET` | Signing secret for **shop** webhook endpoint only |
 | `SHOP_ORIGIN` | `https://shop.rating.cards` (or staging URL) for redirect URLs |
-| Price map | Per-SKU Stripe Price IDs — e.g. `STRIPE_PRICE_ID_CARDS` or a single JSON map secret |
+| `STRIPE_PRICE_ID_CARDS` / `_STICKERS` / `_STANDS` | Per-SKU one-time Price IDs from Stripe Dashboard |
+| `STRIPE_SHIPPING_RATE_ID` | US shipping rate ID (e.g. free shipping) |
 
-Reference list also appears in `rating-cards-shop/.env.local.example` (comments only).
+**Dashboard setup:** follow [runbooks/shop-stripe-setup.md](../runbooks/shop-stripe-setup.md) step by step.
 
 ## Server-side validation rules
 
@@ -74,7 +75,7 @@ Reference list also appears in `rating-cards-shop/.env.local.example` (comments 
 - Recompute totals from Stripe Price IDs, not from browser `subtotalCents`
 - Attach Places data (`businessName`, `formattedAddress`, `reviewUrl`, `placeId`, …) to session metadata at session creation
 
-## Client routes (planned / implementing)
+## Client routes
 
 | Route | Purpose |
 |-------|---------|
@@ -103,5 +104,6 @@ Reference list also appears in `rating-cards-shop/.env.local.example` (comments 
 
 ## Changelog
 
+- 2026-05-30: Client routes shipped; secrets and Dashboard runbook linked
 - 2026-05-30: Initial shop payments spec — Checkout Sessions, shop-* functions, separate webhook
 - 2026-05-19: Autopilot Stripe doc (separate lane) unchanged in integrations/stripe.md

@@ -26,6 +26,7 @@ Central map for the rating.cards doc system. AI agents: read this file during ev
 | [brand/brand-guidelines.md](./brand/brand-guidelines.md) | brand | — | false | tone/visual only |
 | [legal/privacy-policy.md](./legal/privacy-policy.md) | legal | sms, billing, gbp, email | false | unless legal/contract terms change |
 | [legal/terms-of-service.md](./legal/terms-of-service.md) | legal | billing, sms, gbp | false | unless legal/contract terms change |
+| [runbooks/shop-stripe-setup.md](./runbooks/shop-stripe-setup.md) | runbook | shop, billing | false | env/config-only edits |
 | [runbooks/*](./runbooks/) | runbook | — | false | env/config-only edits |
 
 ## 2. Domain → doc trigger matrix
@@ -42,7 +43,7 @@ Central map for the rating.cards doc system. AI agents: read this file during ev
 | `billing` | `src/components/settings/Billing*`, `stripe-webhook`, `create-checkout-session` | business-model, owner-flows, integrations/stripe, sales-brief |
 | `admin` | `src/pages/AdminPage`, `src/components/admin/**`, `admin-*` functions | admin-flows, product-capabilities |
 | `email` | `send-weekly-pulse`, `_shared/emails/**` | owner-flows, product-capabilities, sales-brief |
-| `shop` | `rating-cards-shop/**` (separate repo), `supabase/functions/shop-*` | **shop/overview.md**, **shop/payments.md**, **shop/fulfillment.md**, customer-journey, integrations/stripe, integrations/google-gbp, sales-brief |
+| `shop` | `rating-cards-shop/**` (separate repo), `supabase/functions/shop-*` | **shop/overview.md**, **shop/payments.md**, **shop/fulfillment.md**, **runbooks/shop-stripe-setup.md**, customer-journey, integrations/stripe, integrations/google-gbp, sales-brief |
 
 ## 3. Auto-sync policy
 

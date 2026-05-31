@@ -14,9 +14,9 @@ The **shop** is a separate front-end at **`shop.rating.cards`** (`rating-cards-s
 
 ## Status (2026-05-30)
 
-**Catalog, cart, and Places picker shipped** in `rating-cards-shop`: Next.js 16, product pages, `localStorage` cart with per-line Google Places data, stub checkout UI.
+**Catalog, cart, Places picker, and Stripe checkout shipped** in `rating-cards-shop`: Next.js 16, product pages, `localStorage` cart with per-line Google Places data, hosted Stripe Checkout, success/cancel routes, and shop edge functions.
 
-**Payments and fulfillment** — specified in [payments.md](./payments.md) and [fulfillment.md](./fulfillment.md); implementation in progress.
+**Stripe Dashboard + secrets** — follow [runbooks/shop-stripe-setup.md](../runbooks/shop-stripe-setup.md) to configure Test/Live products, webhooks, and Supabase secrets before first live order.
 
 ## Scope (v1)
 
@@ -51,12 +51,14 @@ Autopilot subscription stays on the landing / app Stripe flow — see [integrati
 
 - [payments.md](./payments.md) — Stripe Checkout, edge functions, Dashboard setup
 - [fulfillment.md](./fulfillment.md) — post-payment email and Antonio workflow
+- [runbooks/shop-stripe-setup.md](../runbooks/shop-stripe-setup.md) — Stripe Dashboard step-by-step (products, webhooks, secrets)
 - [customer-journey.md](../product/customer-journey.md) — sales-led path (still primary)
 - [admin-flows.md](../product/admin-flows.md) — device setup from unclaimed stock
 - [integrations/stripe.md](../integrations/stripe.md) — Autopilot billing only
 
 ## Changelog
 
+- 2026-05-30: Stripe checkout, edge functions, and fulfillment idempotency shipped
 - 2026-05-30: Split from `product/shop.md`; payments and fulfillment moved to dedicated shop docs
 - 2026-05-27: GBP picker on product pages; catalog and cart shipped
 - 2026-05-26: Initial shop placeholder

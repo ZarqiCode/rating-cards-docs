@@ -18,10 +18,9 @@ This matches the existing ops model: devices are pre-registered, not claimed, un
 
 ## Trigger
 
-Only **`shop-stripe-webhook`** on Stripe event `checkout.session.completed` sends fulfillment mail — not the Next.js checkout button. The handler must be **idempotent** (same `session.id` must not send duplicate emails on webhook retries). Options:
+Only **`shop-stripe-webhook`** on Stripe event `checkout.session.completed` sends fulfillment mail — not the Next.js checkout button. The handler must be **idempotent** (same `session.id` must not send duplicate emails on webhook retries).
 
-- Minimal table `shop_checkout_fulfillment` (`session_id`, `emailed_at`), or
-- Stripe session metadata flag `fulfillment_email_sent` set after successful send
+Implementation uses table **`shop.checkout_fulfillment`** (`session_id`, `emailed_at`) in a dedicated `shop` Postgres schema. Insert-on-conflict-skip before sending email.
 
 ## Internal email (hello@rating.cards)
 
@@ -103,5 +102,6 @@ Upgrade path when volume grows: persist orders + admin list; optional buyer conf
 
 ## Changelog
 
+- 2026-05-30: Idempotency table documented as `shop.checkout_fulfillment` in `shop` schema
 - 2026-05-30: Initial fulfillment spec — Resend to hello@rating.cards; no DB orders; Antonio unclaimed-stock workflow
 - 2026-05-27: Prior plan (deferred): admin order UI and business auto-link from shop.md
