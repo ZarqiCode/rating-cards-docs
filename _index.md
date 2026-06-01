@@ -18,6 +18,7 @@ Central map for the rating.cards doc system. AI agents: read this file during ev
 | [shop/payments.md](./shop/payments.md) | integration | shop, billing | true | refactor-only |
 | [shop/fulfillment.md](./shop/fulfillment.md) | product | shop | true | refactor-only |
 | [architecture/system-overview.md](./architecture/system-overview.md) | architecture | admin, multi-location | true | refactor-only |
+| [architecture/frontend-loading-states.md](./architecture/frontend-loading-states.md) | architecture | ui | true | refactor-only |
 | [architecture/devices-nfc-qr.md](./architecture/devices-nfc-qr.md) | architecture | devices, redirects | true | refactor-only |
 | [integrations/stripe.md](./integrations/stripe.md) | integration | billing | false | unless Stripe contract changes |
 | [integrations/twilio.md](./integrations/twilio.md) | integration | sms, managers | false | unless Twilio contract changes |
@@ -42,6 +43,7 @@ Central map for the rating.cards doc system. AI agents: read this file during ev
 | `gbp` | `supabase/functions/google-*` (incl. `google-list-locations`), `sync-reviews` | integrations/google-gbp, product-capabilities, multi-location, sales-brief |
 | `billing` | `src/components/settings/Billing*`, `stripe-webhook`, `create-checkout-session` | business-model, owner-flows, integrations/stripe, sales-brief |
 | `admin` | `src/pages/AdminPage`, `src/components/admin/**`, `admin-*` functions | admin-flows, product-capabilities |
+| `ui` | `src/components/ui/loading/**`, `src/hooks/useLoadingPhase.ts`, `src/components/ui/skeleton.tsx`, `FullScreenLoader` | **architecture/frontend-loading-states.md** |
 | `email` | `send-weekly-pulse`, `_shared/emails/**` | owner-flows, product-capabilities, sales-brief |
 | `shop` | `rating-cards-shop/**` (separate repo), `supabase/functions/shop-*` | **shop/overview.md**, **shop/payments.md**, **shop/fulfillment.md**, **runbooks/shop-stripe-setup.md**, customer-journey, integrations/stripe, integrations/google-gbp, sales-brief |
 
