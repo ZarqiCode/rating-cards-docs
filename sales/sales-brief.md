@@ -29,7 +29,7 @@
 
 | Step | What happens | Sales angle |
 |------|--------------|-------------|
-| **1. Connect Google** | Multi-account OAuth; **select which GBP locations** to import; org name from GBP account | One setup covers every storefront — no manual name step |
+| **1. Connect Google** | OAuth once; **checkbox pick storefronts**; add more later from Settings without signing in again | One login usually covers every location — no manual name step |
 | **2. Manager phones (optional)** | Per-store manager numbers; async SMS verification | Managers verify on their own time — setup doesn't block |
 | **3. Brand voice** | Shared Q&A teaches AI how the brand talks | One voice profile; drafts use each **storefront name** |
 | **4. Confirmation** | Autopilot live per store as managers verify | Automation turns on location by location |
@@ -120,6 +120,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 
 ## Changelog
 
+- 2026-06-01: Pitch/onboarding — add more storefronts from Settings without another Google sign-in
 - 2026-05-22: 4-step onboarding; org name from GBP; Settings **Your info**
 - 2026-05-21: Overview redesign — nav label Overview, proof metrics, unified alerts
 - 2026-05-20: Settings as post-setup config hub; onboarding not revisited after completion

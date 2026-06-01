@@ -35,7 +35,7 @@ Central map for the rating.cards doc system. AI agents: read this file during ev
 | `redirects` | `supabase/functions/card-redirect/**` | devices-nfc-qr, end-customer-flow |
 | `onboarding` | `src/components/onboarding/**`, `src/hooks/useOnboarding*` | owner-flows, product-capabilities, multi-location, sales-brief |
 | `sms` | `supabase/functions/*sms*`, `handle-sms-reply` | owner-flows, multi-location, integrations/twilio, product-capabilities, sales-brief |
-| `gbp` | `supabase/functions/google-*`, `sync-reviews` | integrations/google-gbp, product-capabilities, multi-location, sales-brief |
+| `gbp` | `supabase/functions/google-*` (incl. `google-list-locations`), `sync-reviews` | integrations/google-gbp, product-capabilities, multi-location, sales-brief |
 | `billing` | `src/components/settings/Billing*`, `stripe-webhook`, `create-checkout-session` | business-model, owner-flows, integrations/stripe, sales-brief |
 | `admin` | `src/pages/AdminPage`, `src/components/admin/**`, `admin-*` functions | admin-flows, product-capabilities |
 | `email` | `send-weekly-pulse`, `_shared/emails/**` | owner-flows, product-capabilities, sales-brief |

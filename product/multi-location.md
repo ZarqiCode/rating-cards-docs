@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [multi-location, managers, billing]
 auto_sync: true
-last_verified: 2026-05-20
+last_verified: 2026-06-01
 ---
 
 # Multi-location v1
@@ -36,7 +36,7 @@ Devices remain **organisation-scoped** — not tied row-for-row to storefront re
 
 - Multiple GBP locations per account; multiple Google OAuth connections per business
 - Dashboard **storefront switcher** with stats scoped to active storefront
-- **Settings → Locations** — shared `GbpImportFlow` (OAuth via `/settings/google-callback`) and soft-deactivate storefronts
+- **Settings → Storefronts** — add-more-shops modal (`google-list-locations` + checkbox import); first Google connect still uses OAuth; soft-deactivate storefronts; paused shops can be re-added from the picker
 - **Settings → Notifications** — per-store manager lines + resend verification SMS
 - Public **`/verify-sms/:token`** — manager verification (SMS link + OTP) without app login
 - CEO-only product surface; managers approve on SMS only
@@ -61,5 +61,6 @@ Tag these `(deferred v1)` elsewhere — do not document as shipped:
 
 ## Changelog
 
+- 2026-06-01: Storefronts add-more-shops without re-OAuth; extra Google logins only under Settings → Google accounts
 - 2026-05-20: Settings Locations uses shared GBP import; onboarding not used post-completion
 - 2026-05-19: Split from project-brief.md Multi-location v1 section

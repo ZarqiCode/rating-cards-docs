@@ -2,7 +2,7 @@
 
 Use the **built-in test UI** for Edge Functions so you do not need `curl` or local env vars in the terminal. Supabase sends the request from your browser and shows the response in the same panel.
 
-These functions implement **OAuth + listing locations + importing reviews** for GBP. Ongoing **review sync** uses a separate function (`sync-reviews`); see [email-bot-edge-function-tests.md](./email-bot-edge-function-tests.md) for that.
+These functions implement **OAuth**, **listing locations** (callback + token-based list), and **importing reviews** for GBP. Ongoing **review sync** uses a separate function (`sync-reviews`); see [email-bot-edge-function-tests.md](./email-bot-edge-function-tests.md) for that.
 
 ---
 
@@ -17,7 +17,7 @@ These functions implement **OAuth + listing locations + importing reviews** for 
 
 ## Auth: user JWT (not service role)
 
-These three functions validate the caller with **`supabase.auth.getUser()`** using the **`Authorization`** header and the **anon** client. They expect a **normal logged-in user’s access token** (the same JWT your app sends after `supabase.auth.signIn`).
+These four user-facing functions validate the caller with **`supabase.auth.getUser()`** using the **`Authorization`** header and the **anon** client. They expect a **normal logged-in user’s access token** (the same JWT your app sends after `supabase.auth.signIn`).
 
 | Role / header | Works? |
 |---------------|--------|
@@ -50,7 +50,7 @@ Ensure these are set under **Project Settings → Edge Functions → Secrets** (
 | Secret | Used by |
 |--------|---------|
 | `GOOGLE_CLIENT_ID` | `google-auth-url`, `google-callback` |
-| `GOOGLE_CLIENT_SECRET` | `google-callback`, `google-import-reviews` (refresh) |
+| `GOOGLE_CLIENT_SECRET` | `google-callback`, `google-import-reviews`, `google-list-locations` (refresh) |
 | `GOOGLE_REDIRECT_URI` | `google-callback` (must match Google Cloud OAuth client **Authorized redirect URIs**; `google-auth-url` can fall back to request body `redirect_uri` for the authorize URL) |
 
 Also: **`SUPABASE_URL`**, **`SUPABASE_ANON_KEY`**, **`SUPABASE_SERVICE_ROLE_KEY`** are required for the Supabase clients inside the functions (usually provided by the platform).
@@ -78,7 +78,8 @@ Builds the Google OAuth URL (scopes `business.manage`, `openid`, `email`, `profi
 
 - `business_id` must exist in **`businesses`** for the logged-in user you are testing as (recommended).
 - `redirect_uri` should match what you use in the app; the function prefers **`GOOGLE_REDIRECT_URI`** env when building the authorize URL if set.
-- `flow` is optional: `onboarding` (default) or `settings` — encoded in OAuth `state` for post-callback routing.
+- `flow` is optional: `onboarding` (default), `settings`, or `integrations` — encoded in OAuth `state` for post-callback routing.
+- `google_connection_id` is optional — pass when reconnecting a stored login (Storefronts per-email reconnect).
 
 ### Register redirect URI in Google Cloud
 
@@ -206,6 +207,55 @@ Use IDs from **Test 2** response or from **`google_connections`** / your app aft
 
 ---
 
+## Test 4 — `google-list-locations`
+
+Lists GBP locations for **all** stored **`google_connections`** on a business (refreshes tokens), merges with existing storefront rows, and returns import status per location.
+
+| Field | Value |
+|--------|--------|
+| **HTTP Method** | `POST` |
+| **Headers** | `Authorization: Bearer <same user access_token>` |
+| **Request Body** | JSON |
+
+```json
+{
+  "business_id": "YOUR_BUSINESS_UUID"
+}
+```
+
+**Expected (success):** `200` with JSON like:
+
+```json
+{
+  "has_connections": true,
+  "locations": [
+    {
+      "accountId": "...",
+      "locationId": "...",
+      "name": "Shop name",
+      "address": "...",
+      "google_connection_id": "...",
+      "google_account_email": "owner@example.com",
+      "status": "available"
+    }
+  ],
+  "connection_errors": [
+    {
+      "google_connection_id": "...",
+      "google_account_email": "owner@example.com",
+      "code": "reconnect_required"
+    }
+  ]
+}
+```
+
+- `status`: `available` (not in app), `active` (already imported), or `paused` (re-import re-activates via **`google-import-reviews`**).
+- **`has_connections: false`** when no **`google_connections`** rows exist yet (app should start OAuth instead).
+
+**Expected (failure):** `400` missing `business_id`; `401` bad user JWT; `403` if `business_id` is not owned by the user.
+
+---
+
 ## Related: `sync-reviews` (not part of “connect”, but GBP data)
 
 After a connection exists with **`gbp_account_id`** and **`gbp_location_id`**, scheduled or manual sync uses **`sync-reviews`**, which expects **service role** auth. See **Test 1** in [email-bot-edge-function-tests.md](./email-bot-edge-function-tests.md).
@@ -216,8 +266,9 @@ After a connection exists with **`gbp_account_id`** and **`gbp_location_id`**, s
 
 | Function | Method | Auth | Body summary |
 |----------|--------|------|----------------|
-| `google-auth-url` | POST | User JWT | `business_id`, `redirect_uri` |
+| `google-auth-url` | POST | User JWT | `business_id`, `redirect_uri`, optional `flow`, optional `google_connection_id` |
 | `google-callback` | POST | User JWT | `code`, `state` |
+| `google-list-locations` | POST | User JWT | `business_id` |
 | `google-import-reviews` | POST | User JWT | `business_id`, `gbp_account_id`, `gbp_location_id`, optional `gbp_location_name` |
 | `sync-reviews` | POST | Service role | `{}` (see other doc) |
 
@@ -227,7 +278,8 @@ After a connection exists with **`gbp_account_id`** and **`gbp_location_id`**, s
 
 | Symptom | What to check |
 |---------|----------------|
-| **401** on all three | User **`access_token`** expired or wrong; not using service role for these functions—use a **user** JWT. |
+| **401** on all four | User **`access_token`** expired or wrong; not using service role for these functions—use a **user** JWT. |
+| **`connection_errors` in list** | Refresh token revoked—reconnect that Google login via **`google-auth-url`** with `google_connection_id`. |
 | **`google-auth-url` 500** | Missing **`GOOGLE_CLIENT_ID`**. |
 | **`google-callback` 400** from Google | **`GOOGLE_REDIRECT_URI`** mismatch vs the redirect used to obtain `code`; wrong `client_id` / `client_secret`; expired `code` (codes are single-use and short-lived). |
 | **`google-import-reviews` 502** with Google message | Reviews API denied or misconfigured—enable **Google My Business API** / complete Google’s Business Profile API access request; confirm OAuth scopes include business management. |
@@ -235,7 +287,7 @@ After a connection exists with **`gbp_account_id`** and **`gbp_location_id`**, s
 
 Redeploy after code changes, for example:
 
-`npx supabase functions deploy google-auth-url google-callback google-import-reviews`
+`npx supabase functions deploy google-auth-url google-callback google-list-locations google-import-reviews`
 
 `verify_jwt = false` is set in [`supabase/config.toml`](../../supabase/config.toml) for these functions; auth is enforced inside each handler as described above.
 
