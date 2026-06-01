@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [onboarding, sms, billing, multi-location, managers]
 auto_sync: true
-last_verified: 2026-05-23
+last_verified: 2026-06-01
 ---
 
 # Owner flows
@@ -20,7 +20,7 @@ last_verified: 2026-05-23
 
 After signup, guided flow:
 
-1. **Google connection** — multi-account OAuth; **multi-select GBP locations** to import as storefronts; organisation name auto-filled from GBP account on first import
+1. **Google connection** — OAuth once; **checkbox list of GBP storefronts** (always shown, even for a single location); organisation name auto-filled from GBP account on first import. A second Google login is optional later under **Settings → Google accounts** (info icon on step 1 explains this).
 2. **Per-store SMS (optional)** — manager phone numbers, TCPA consent (`sms_v2` checkbox + Privacy/Terms links); **async** verification via public link + OTP; onboarding can complete with verifications pending
 3. **Brand voice** — shared Q&A profile for AI drafts across all storefronts
 4. **Confirmation** — Autopilot active per storefront as manager lines verify
@@ -60,14 +60,14 @@ If no active storefronts exist after onboarding, Overview shows a blocking alert
 |---------|---------|
 | **Billing** | View subscription, Stripe portal for payment/cancel |
 | **Your info** | Edit organisation name (auto-filled from GBP on first import) |
-| **Storefronts** (locations) | Add shops from Google, list active/paused storefronts, pause a shop |
+| **Storefronts** (locations) | **Add more shops** modal — pick unimported GBP locations from already linked Google logins (no re-OAuth); list active/paused storefronts; pause a shop; post-import prompt to set manager phones |
 | **Notifications** | Per-store manager lines; invite link + CEO inline OTP; verified lines read-only |
 | **Brand voice** | Edit shared AI draft personality (does not change onboarding step) |
-| **Google accounts** (integrations) | Which Google logins are linked; link another login; add shops in Storefronts |
+| **Google accounts** (integrations) | Edge case: link an **additional** Google login (separate owner email); success modal → add shops in **Storefronts** |
 
 Sections use `?section=` in the URL. Smart default opens the first incomplete area (locations → notifications → brand voice → billing).
 
-GBP OAuth callback: `/settings/google-callback` with `flow` in OAuth state (`onboarding` or `settings`).
+GBP OAuth callback: `/settings/google-callback` with `flow` in OAuth state (`onboarding`, `settings`, or `integrations`). Listing locations for add-more-shops uses `google-list-locations` (stored tokens, no OAuth).
 
 ## Weekly pulse
 
@@ -81,6 +81,7 @@ Organisation-level email every Monday. SMS handles moment-to-moment; pulse handl
 
 ## Changelog
 
+- 2026-06-01: Storefronts add-more-shops modal (token-based picker); Google accounts only for extra logins; onboarding always shows location checkbox
 - 2026-05-23: SMS consent sms_v2 with Privacy/Terms links on onboarding, Settings, and verify-sms page
 - 2026-05-22: 4-step onboarding (drop manual name step); org name from GBP; Settings **Your info**
 - 2026-05-21: Overview redesign — nav label Overview, proof metrics, unified alerts, no devices on home
