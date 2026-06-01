@@ -3,7 +3,7 @@ product: rating.cards
 layer: integration
 domains: [billing]
 auto_sync: false
-last_verified: 2026-05-19
+last_verified: 2026-05-30
 ---
 
 # Stripe integration
@@ -13,7 +13,7 @@ last_verified: 2026-05-19
 ## Model
 
 - **Autopilot:** $20/month recurring, **flat per account** in v1 (not per storefront)
-- **Physical products:** sold outside this app's Stripe flow (one-time, sales-led)
+- **Physical products (shop):** one-time Checkout Sessions on `shop.rating.cards` — see [shop/payments.md](../shop/payments.md). Sales-led path still supported; Autopilot unchanged here.
 
 Per-location Stripe quantity is **deferred v1**. See [product/multi-location.md](../product/multi-location.md).
 
@@ -35,4 +35,5 @@ Settings → Billing opens Stripe Customer Portal for payment method updates, ca
 
 ## Changelog
 
+- 2026-05-30: Note shop hardware lane in shop/payments.md (separate webhook)
 - 2026-05-19: Initial integration doc; flat account billing for v1

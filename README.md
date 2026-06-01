@@ -4,7 +4,7 @@ Shared documentation for all rating.cards projects (app, landing page, and futur
 
 Start here: **[`_index.md`](./_index.md)** — the doc map, domain trigger matrix, and maintenance checklist for AI and humans.
 
-**Layers:** `product/` (what it does) → `architecture/` + `integrations/` (how it works) → `sales/` + `brand/` (audience views) → `runbooks/` (ops and testing).
+**Layers:** `product/` (what it does) → `shop/` (hardware shop scope, payments, fulfillment) → `architecture/` + `integrations/` (how it works) → `sales/` + `brand/` (audience views) → `runbooks/` (ops and testing).
 
 The monolithic [project-brief.md](./project-brief.md) has been split into `product/`; the stub redirects here.
 
