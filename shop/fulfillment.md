@@ -40,14 +40,14 @@ Send via **Resend** (same provider as app weekly pulse — `RESEND_API_KEY` on t
 
 **Ship to**
 
-- Full shipping address from Checkout collection
+- Full shipping address from Checkout (`collected_information.shipping_details` on the session)
 
 **Line items** (one block per cart line)
 
 For each line from session metadata / expanded line items:
 
 - Product name and slug
-- Quantity and unit price
+- Quantity and unit price (from Stripe line items on the retrieved Checkout Session)
 - **Business name** (Places)
 - **Formatted address** (Places)
 - **Review / destination URL** — `https://search.google.com/local/writereview?placeid=...` (Antonio uses this as `destination_url` in admin)
@@ -102,6 +102,7 @@ Upgrade path when volume grows: persist orders + admin list; optional buyer conf
 
 ## Changelog
 
+- 2026-05-30: Webhook retrieves full session for shipping (`collected_information`) and per-line unit prices
 - 2026-05-30: Idempotency table documented as `shop.checkout_fulfillment` in `shop` schema
 - 2026-05-30: Initial fulfillment spec — Resend to hello@rating.cards; no DB orders; Antonio unclaimed-stock workflow
 - 2026-05-27: Prior plan (deferred): admin order UI and business auto-link from shop.md
