@@ -1,20 +1,20 @@
 ---
 product: rating.cards
 layer: legal
-domains: [billing, sms, gbp]
+domains: [billing, sms, gbp, shop]
 auto_sync: false
-last_verified: 2026-05-23
+last_verified: 2026-06-03
 ---
 
 # Terms of Service
 
-**Effective date:** May 23, 2026
+**Effective date:** June 3, 2026
 
-**Last updated:** May 23, 2026
+**Last updated:** June 3, 2026
 
 **Published version:** [https://www.rating.cards/terms](https://www.rating.cards/terms)
 
-These Terms of Service ("**Terms**") govern your access to and use of the products and services offered by rating.cards ("**we**," "**us**," or "**our**"), including our website at [https://www.rating.cards](https://www.rating.cards), our web application at [https://app.rating.cards](https://app.rating.cards), our physical review devices, and our Autopilot software subscription (collectively, the "**Service**").
+These Terms of Service ("**Terms**") govern your access to and use of the products and services offered by rating.cards ("**we**," "**us**," or "**our**"), including our website at [https://www.rating.cards](https://www.rating.cards), our web application at [https://app.rating.cards](https://app.rating.cards), our hardware shop at [https://shop.rating.cards](https://shop.rating.cards), our physical review devices, and our Autopilot software subscription (collectively, the "**Service**").
 
 By accessing or using the Service, creating an account, purchasing hardware, or subscribing to Autopilot, you agree to be bound by these Terms and our [Privacy Policy](./privacy-policy.md). If you do not agree, do not use the Service.
 
@@ -95,6 +95,12 @@ After 30 days, all Hardware sales are final except where required by applicable 
 ### 5.4 Shipping
 
 Shipping times and costs will be communicated at the time of purchase. We are not responsible for delays caused by the carrier.
+
+A buyer-friendly summary of shipping and returns for shop purchases is available at [https://shop.rating.cards/shipping-returns](https://shop.rating.cards/shipping-returns). That page is for convenience only; these Terms govern.
+
+### 5.5 Guest checkout
+
+Hardware may be purchased at **shop.rating.cards** without creating a rating.cards account. By completing checkout, you agree to these Terms and our [Privacy Policy](./privacy-policy.md). Guest purchasers receive order confirmations and receipts through Stripe; no app account is created automatically.
 
 ---
 
@@ -400,5 +406,6 @@ If you have questions about these Terms, contact us:
 
 ## Changelog
 
+- 2026-06-03: shop.rating.cards in Service definition; guest checkout (§5.5); shipping-returns summary link
 - 2026-05-23: sms_v2 consent text (frequency + STOP disclosures); published URL
 - 2026-05-23: Initial Terms of Service draft covering hardware, Autopilot subscription, SMS consent obligations, AI disclaimers, AUP, and JAMS arbitration in San Diego County

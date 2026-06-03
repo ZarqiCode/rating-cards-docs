@@ -1,20 +1,20 @@
 ---
 product: rating.cards
 layer: legal
-domains: [sms, billing, gbp, email]
+domains: [sms, billing, gbp, email, shop]
 auto_sync: false
-last_verified: 2026-05-23
+last_verified: 2026-06-03
 ---
 
 # Privacy Policy
 
-**Effective date:** May 23, 2026
+**Effective date:** June 3, 2026
 
-**Last updated:** May 23, 2026
+**Last updated:** June 3, 2026
 
 **Published version:** [https://www.rating.cards/privacy](https://www.rating.cards/privacy)
 
-This Privacy Policy describes how rating.cards ("**we**," "**us**," or "**our**") collects, uses, and shares information when you visit our website at [https://www.rating.cards](https://www.rating.cards), use our web application at [https://app.rating.cards](https://app.rating.cards), interact with our SMS programs, or tap or scan one of our physical review devices at a participating venue.
+This Privacy Policy describes how rating.cards ("**we**," "**us**," or "**our**") collects, uses, and shares information when you visit our website at [https://www.rating.cards](https://www.rating.cards), use our web application at [https://app.rating.cards](https://app.rating.cards), purchase hardware at [https://shop.rating.cards](https://shop.rating.cards), interact with our SMS programs, or tap or scan one of our physical review devices at a participating venue.
 
 By using our services, you agree to the practices described in this Privacy Policy. If you do not agree, please do not use our services.
 
@@ -42,6 +42,7 @@ This Privacy Policy applies to:
 
 - Visitors to **rating.cards** (our marketing and landing site)
 - Account owners who sign up for and use **app.rating.cards**
+- Purchasers at **shop.rating.cards** (hardware shop, guest checkout — see Section 3.8)
 - Store managers who receive SMS messages from rating.cards (even if they never create an account)
 - End customers who tap or scan a rating.cards device at a venue (limited data only — see Section 3.5)
 
@@ -122,14 +123,27 @@ If you are an account owner or have an email address on file for notifications, 
 
 ### 3.7 Cookies and similar technologies
 
-We use **essential cookies only** — no analytics, advertising, or marketing pixels.
+We use **essential cookies and local storage only** — no analytics, advertising, or marketing pixels.
 
 | Cookie / technology | Purpose | Provider |
 |---------------------|---------|----------|
 | Authentication session | Keep you logged in to app.rating.cards | Supabase |
-| Stripe checkout session | Process subscription payments | Stripe |
+| Stripe checkout session | Process subscription and hardware payments | Stripe |
+| Cart persistence (`localStorage`) | Save shop cart contents between visits on shop.rating.cards | rating.cards (browser storage) |
+
+When you complete hardware checkout, Stripe's hosted checkout page may set cookies necessary to process your one-time payment. We do not set analytics or advertising cookies on shop.rating.cards.
 
 We do not use Google Analytics, Meta Pixel, or similar tracking tools on our websites.
+
+### 3.8 Hardware shop purchasers (guest checkout)
+
+When you purchase hardware at **shop.rating.cards** without creating an account, we collect:
+
+- **Business search data** — when you select your business on a product page, we receive data from the Google Places API, including `placeId`, business name, formatted address, city, country, latitude, longitude, and your Google review URL. You submit this with your cart so we can pre-configure each device before shipping.
+- **Cart data** — product selections, quantities, and per-line business details stored in your browser's **`localStorage`** until you complete checkout or clear your cart.
+- **Checkout and order data** — at Stripe Checkout, you provide your email address, US shipping address, and payment method (payment card details are collected and stored by Stripe, not by us). We receive order metadata (including your business configuration per line item) via the Stripe Checkout Session and in internal fulfillment communications to our team.
+
+We use this information to process your hardware order, configure devices with your review link, ship your order, and respond to support or warranty requests. Shop v1 does **not** create a rating.cards account automatically.
 
 ---
 
@@ -143,6 +157,7 @@ We use the information we collect to:
 - Sync reviews from Google Business Profile and post approved replies
 - Generate AI-drafted review replies based on your brand voice settings
 - Process subscription payments through Stripe
+- Process hardware purchases through Stripe Checkout at shop.rating.cards
 - Provision, activate, and track physical review devices
 - Analyse aggregate tap data for dashboard analytics (tap counts per device)
 - Detect, prevent, and address fraud, abuse, and security issues
@@ -241,7 +256,8 @@ We share personal information only with the following categories of service prov
 | Provider | Purpose | Data shared |
 |----------|---------|-------------|
 | **Supabase** | Database, authentication, edge functions | Account data, reviews, SMS records, device data |
-| **Stripe** | Payment processing and subscription management | Name, email, payment method (stored by Stripe) |
+| **Stripe** | Payment processing and subscription management; hardware checkout | Name, email, shipping address, payment method (stored by Stripe) |
+| **Google Maps Platform (Places API)** | Business search autocomplete on shop.rating.cards | Business name, address, place ID, and related fields you select |
 | **Twilio** | SMS/MMS delivery and receipt | Manager phone numbers, message content |
 | **Resend** | Transactional email delivery | Account owner email, email content |
 | **Google** | Google Business Profile API (OAuth) | Review data, reply content, listing metadata |
@@ -273,6 +289,7 @@ We retain personal information according to the following schedule:
 | Email notification preferences | While your account is active; suppression records retained indefinitely |
 | SMS and email opt-out / suppression lists | **Indefinitely** (to prevent re-contacting opted-out individuals) |
 | End-customer tap logs (user agent, country) | Retained as aggregate analytics data; not tied to identifiable individuals |
+| Hardware order and fulfillment records | Up to **7 years** after the transaction (for tax, audit, and warranty support; payment records stored by Stripe) |
 | Billing and payment records | Up to **7 years** after the transaction (for tax and audit purposes; stored by Stripe) |
 
 When your account is closed, we delete or anonymize personal data within 90 days, except where a longer retention period is required by law or needed for billing records and opt-out suppression.
@@ -380,5 +397,6 @@ If you have questions about this Privacy Policy or wish to exercise your privacy
 
 ## Changelog
 
+- 2026-06-03: shop.rating.cards scope; hardware guest checkout data (Places, localStorage, Stripe); Google Maps Platform provider; retention for order fulfillment
 - 2026-05-23: sms_v2 consent text (frequency + STOP disclosures); published URL; legal links in app opt-in surfaces
 - 2026-05-23: Initial Privacy Policy draft covering SMS consent (sms_v1), CCPA/CPRA rights, data retention, and service provider disclosures
