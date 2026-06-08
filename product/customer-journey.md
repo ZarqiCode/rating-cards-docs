@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [onboarding, billing]
 auto_sync: true
-last_verified: 2026-05-22
+last_verified: 2026-06-07
 ---
 
 # Customer journey
@@ -37,9 +37,9 @@ After seeing review volume increase, owner subscribes from **rating.cards** land
 Guided flow (~10 minutes):
 
 1. Connect Google — multi-account + **multi-select GBP locations** (organisation name derived from GBP account)
-2. Optional **per-store manager phones** with async SMS verification (not blocking)
-3. Shared brand voice for AI
-4. Confirmation
+2. **Brand voice (required)** — single-page form; teaches AI how the brand talks
+3. **Per-store SMS activation** — checklist per storefront; async manager verification OK; must decide per store (verify, pending, or set up later)
+4. Review & finish — honest per-storefront status summary
 
 Autopilot behaviour is **per storefront** once manager lines verify. See [owner-flows.md](./owner-flows.md).
 
@@ -51,5 +51,6 @@ Autopilot behaviour is **per storefront** once manager lines verify. See [owner-
 
 ## Changelog
 
+- 2026-06-07: Onboarding reorder — brand voice required before SMS activation checklist
 - 2026-05-22: Onboarding starts at Google Connect; org name auto-derived from GBP
 - 2026-05-19: Split from project-brief.md; multi-location onboarding and Settings expansion

@@ -21,9 +21,11 @@ last_verified: 2026-06-07
 After signup, guided flow:
 
 1. **Google connection** — OAuth once; **checkbox list of GBP storefronts** (always shown, even for a single location); organisation name auto-filled from GBP account on first import. A second Google login is optional later under **Settings → Google accounts** (info icon on step 1 explains this).
-2. **Per-store SMS (optional)** — manager phone numbers, TCPA consent (`sms_v2` checkbox + Privacy/Terms links); **async** verification via public link + OTP; onboarding can complete with verifications pending
-3. **Brand voice** — shared Q&A profile for AI drafts across all storefronts; optional **auto-respond** toggle (4–5 star reviews auto-post when enabled; 1–3 star still SMS)
-4. **Confirmation** — Autopilot active per storefront as manager lines verify
+2. **Brand voice (required)** — single-page form; shared Q&A profile for AI drafts across all storefronts; optional **auto-respond** toggle (4–5 star reviews auto-post when enabled; 1–3 star still SMS). Cannot skip.
+3. **Per-store SMS activation** — per-location checklist with status badges (Not started / Pending verification / Verified / Set up later); manager phone numbers, TCPA consent (`sms_v2` checkbox + Privacy/Terms links); **async** verification via public link + OTP; CEO must decide per storefront before continuing; verification not required to finish onboarding
+4. **Review & finish** — honest status headline (4 tiers) plus per-storefront SMS summary; Autopilot live per storefront as manager lines verify
+
+Progress bar shows 3 segments (Google → Brand voice → Manager SMS); finish screen has no progress segment.
 
 Welcome splash may appear before step 1 for new users. Organisation name can be edited later in **Settings → Your info**.
 
@@ -83,6 +85,7 @@ Organisation-level email every Monday. SMS handles moment-to-moment; pulse handl
 
 ## Changelog
 
+- 2026-06-07: Onboarding reorder — Google → brand voice (required) → SMS activation checklist → honest finish; 3-segment progress bar
 - 2026-06-07: Hybrid auto-respond — opt-in 4–5 star auto-post; 1–3 star SMS approval unchanged
 - 2026-06-01: Storefronts add-more-shops modal (token-based picker); Google accounts only for extra logins; onboarding always shows location checkbox
 - 2026-05-23: SMS consent sms_v2 with Privacy/Terms links on onboarding, Settings, and verify-sms page
