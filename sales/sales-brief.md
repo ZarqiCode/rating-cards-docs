@@ -31,7 +31,7 @@
 |------|--------------|-------------|
 | **1. Connect Google** | OAuth once; **checkbox pick storefronts**; add more later from Settings without signing in again | One login usually covers every location — no manual name step |
 | **2. Manager phones (optional)** | Per-store manager numbers; async SMS verification | Managers verify on their own time — setup doesn't block |
-| **3. Brand voice** | Shared Q&A teaches AI how the brand talks | One voice profile; drafts use each **storefront name** |
+| **3. Brand voice** | Shared Q&A teaches AI how the brand talks; optional **auto-respond** for 4–5 star reviews | One voice profile; drafts use each **storefront name**; turn on automation for positives |
 | **4. Confirmation** | Autopilot live per store as managers verify | Automation turns on location by location |
 
 **Objection:** *"I don't have time to set this up."* → Under 10 minutes once. We also set up physical cards before they ship.
@@ -52,10 +52,13 @@
 
 ### Per storefront (when manager verified)
 
-- New review → SMS to that store's manager with AI draft
+- **Auto-respond (opt-in):** 4–5 star reviews get AI reply posted automatically — managers never see an SMS
+- **1–3 star reviews** (or all reviews when auto-respond off) → SMS to that store's manager with AI draft
 - Manager approves, writes own reply, or skips — all via SMS
 - Queue clears overnight backlogs in one thread
 - Replies post to the **correct** Google listing
+
+**Sales line:** *"Turn on auto-respond and positive reviews handle themselves. You only get pinged when something actually needs a human — a bad review."*
 
 ### Gating (important for honest selling)
 
@@ -102,7 +105,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 | *"I run multiple locations."* | One account, import every GBP location, assign a manager phone per store. Flat $20/mo in v1. |
 | *"My managers won't use software."* | They don't. SMS only — verify once, approve from text forever. |
 | *"AI replies sound generic."* | Brand voice Q&A + storefront name in every draft. Sounds like you, not a bot. |
-| *"What if AI says something wrong?"* | Managers approve every reply from SMS before it posts. |
+| *"What if AI says something wrong?"* | Managers approve every **negative** reply from SMS before it posts. Positive auto-replies use your brand voice — you opt in, and you can turn it off anytime. |
 | *"Is $20/month worth it?"* | One extra customer from a higher rating pays for it. Most venues see dozens more reviews in month one. |
 | *"Can I cancel?"* | Anytime, one click, Stripe portal. Access through end of paid period. |
 
@@ -120,6 +123,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 
 ## Changelog
 
+- 2026-06-07: Hybrid auto-respond pitch — 4–5 star auto-post opt-in; SMS only for negatives
 - 2026-06-01: Pitch/onboarding — add more storefronts from Settings without another Google sign-in
 - 2026-05-22: 4-step onboarding; org name from GBP; Settings **Your info**
 - 2026-05-21: Overview redesign — nav label Overview, proof metrics, unified alerts

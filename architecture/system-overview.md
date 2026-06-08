@@ -3,7 +3,7 @@ product: rating.cards
 layer: architecture
 domains: [admin, multi-location]
 auto_sync: true
-last_verified: 2026-05-20
+last_verified: 2026-06-07
 ---
 
 # System overview
@@ -37,7 +37,8 @@ last_verified: 2026-05-20
 - **Business** — organisation; links to user account after subscription
 - **Storefront / location** — GBP location imported per business; soft-deactivate in v1
 - **Devices** — organisation-scoped in v1; `public_id`, `status`, `destination_url`
-- **Reviews** — synced per storefront from GBP
+- **Reviews** — synced per storefront from GBP; `ai_reply_status`, `posted_via` (`auto` | `sms_approved` | `sms_custom`)
+- **Brand voice settings** — per-business AI personality; `auto_respond_enabled` (opt-in hybrid mode)
 - **Manager verification** — per-storefront phone lines with async OTP flow
 
 See [product/multi-location.md](../product/multi-location.md) for v1 boundaries.
@@ -50,7 +51,7 @@ See [product/multi-location.md](../product/multi-location.md) for v1 boundaries.
 | `activate-device`, `admin-devices`, `admin-businesses`, `bulk-provision` | Admin provisioning |
 | `google-auth-url`, `google-callback`, `google-import-reviews` | GBP OAuth and location import |
 | `sync-reviews` | Scheduled/manual review sync |
-| `send-review-sms`, `handle-sms-reply`, `approve-reply`, `respond-to-review` | SMS review workflow |
+| `send-review-sms`, `handle-sms-reply`, `approve-reply`, `respond-to-review` | SMS review workflow; `respond-to-review` branches on `shouldAutoRespond()` — auto-posts 4–5 star when `auto_respond_enabled`, else SMS handoff |
 | `create-sms-verification`, `verify-sms-public`, `send-otp-sms`, `verify-otp-sms` | Manager phone verification |
 | `create-checkout-session`, `claim-checkout-session`, `stripe-webhook`, `create-portal-session` | Billing |
 | `send-weekly-pulse`, `send-negative-alert` | Email |
@@ -73,5 +74,6 @@ CEO routes `/dashboard` and `/settings` share an **AppLayout** shell: header wit
 
 ## Changelog
 
+- 2026-06-07: Hybrid auto-respond — `auto_respond_enabled`, `posted_via`, `shouldAutoRespond()` routing in `respond-to-review`
 - 2026-05-21: Overview page redesign at `/dashboard` (nav label Overview)
 - 2026-05-19: Initial architecture doc from project-brief Domains + codebase

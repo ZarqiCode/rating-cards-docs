@@ -45,6 +45,7 @@ Central map for the rating.cards doc system. AI agents: read this file during ev
 | `admin` | `src/pages/AdminPage`, `src/components/admin/**`, `admin-*` functions | admin-flows, product-capabilities |
 | `ui` | `src/components/ui/loading/**`, `src/hooks/useLoadingPhase.ts`, `src/components/ui/skeleton.tsx`, `FullScreenLoader` | **architecture/frontend-loading-states.md** |
 | `email` | `send-weekly-pulse`, `_shared/emails/**` | owner-flows, product-capabilities, sales-brief |
+| `reviews` | `respond-to-review`, `retry-failed-replies`, `sync-reviews`, `brand_voice_settings.auto_respond_enabled`, `reviews.posted_via` | **product-capabilities.md**, owner-flows, architecture/system-overview, sales-brief |
 | `shop` | `rating-cards-shop/**` (separate repo), `supabase/functions/shop-*` | **shop/overview.md**, **shop/payments.md**, **shop/fulfillment.md**, **runbooks/shop-stripe-setup.md**, customer-journey, integrations/stripe, integrations/google-gbp, sales-brief |
 
 ## 3. Auto-sync policy

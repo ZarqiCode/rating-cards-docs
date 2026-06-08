@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [onboarding, sms, billing, multi-location, managers]
 auto_sync: true
-last_verified: 2026-06-01
+last_verified: 2026-06-07
 ---
 
 # Owner flows
@@ -22,7 +22,7 @@ After signup, guided flow:
 
 1. **Google connection** — OAuth once; **checkbox list of GBP storefronts** (always shown, even for a single location); organisation name auto-filled from GBP account on first import. A second Google login is optional later under **Settings → Google accounts** (info icon on step 1 explains this).
 2. **Per-store SMS (optional)** — manager phone numbers, TCPA consent (`sms_v2` checkbox + Privacy/Terms links); **async** verification via public link + OTP; onboarding can complete with verifications pending
-3. **Brand voice** — shared Q&A profile for AI drafts across all storefronts
+3. **Brand voice** — shared Q&A profile for AI drafts across all storefronts; optional **auto-respond** toggle (4–5 star reviews auto-post when enabled; 1–3 star still SMS)
 4. **Confirmation** — Autopilot active per storefront as manager lines verify
 
 Welcome splash may appear before step 1 for new users. Organisation name can be edited later in **Settings → Your info**.
@@ -37,7 +37,9 @@ Managers receive SMS with link to **`/verify-sms/:token`**. OTP confirmation ver
 
 ## Day-to-day: SMS approval loop
 
-For verified storefronts, managers receive SMS on new reviews with AI draft. Two-tap approve, write own reply, or skip. Queue handles backlog. CEOs do not need to participate in SMS thread unless they are also the verified manager.
+For verified storefronts, managers receive SMS on **1–3 star** reviews (and on all reviews when auto-respond is off). Two-tap approve, write own reply, or skip. Queue handles backlog. CEOs do not need to participate in SMS thread unless they are also the verified manager.
+
+When **auto-respond** is enabled in Brand voice (Settings or onboarding), **4–5 star** reviews get an AI reply posted to Google automatically — no SMS. Negative reviews always go through the SMS approval loop.
 
 ## Overview (CEO home)
 
@@ -62,7 +64,7 @@ If no active storefronts exist after onboarding, Overview shows a blocking alert
 | **Your info** | Edit organisation name (auto-filled from GBP on first import) |
 | **Storefronts** (locations) | **Add more shops** modal — pick unimported GBP locations from already linked Google logins (no re-OAuth); list active/paused storefronts; pause a shop; post-import prompt to set manager phones |
 | **Notifications** | Per-store manager lines; invite link + CEO inline OTP; verified lines read-only |
-| **Brand voice** | Edit shared AI draft personality (does not change onboarding step) |
+| **Brand voice** | Edit shared AI draft personality; toggle **auto-respond** for 4–5 star reviews (default off) |
 | **Google accounts** (integrations) | Edge case: link an **additional** Google login (separate owner email); success modal → add shops in **Storefronts** |
 
 Sections use `?section=` in the URL. Smart default opens the first incomplete area (locations → notifications → brand voice → billing).
@@ -81,6 +83,7 @@ Organisation-level email every Monday. SMS handles moment-to-moment; pulse handl
 
 ## Changelog
 
+- 2026-06-07: Hybrid auto-respond — opt-in 4–5 star auto-post; 1–3 star SMS approval unchanged
 - 2026-06-01: Storefronts add-more-shops modal (token-based picker); Google accounts only for extra logins; onboarding always shows location checkbox
 - 2026-05-23: SMS consent sms_v2 with Privacy/Terms links on onboarding, Settings, and verify-sms page
 - 2026-05-22: 4-step onboarding (drop manual name step); org name from GBP; Settings **Your info**

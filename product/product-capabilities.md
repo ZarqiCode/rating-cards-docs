@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [devices, sms, gbp, email, onboarding]
 auto_sync: true
-last_verified: 2026-06-01
+last_verified: 2026-06-07
 ---
 
 # Product capabilities
@@ -28,15 +28,18 @@ Philosophy: hospitality owners should rarely log into a dashboard. Day-to-day ru
 ### AI review responder + SMS approval
 
 - Drafts replies **per storefront** using shared brand voice + **storefront name**
-- Surfaces drafts to **verified manager** via SMS (no app login)
-- **Gating:** unverified storefronts sync reviews only — no AI drafts or alert SMS
+- **Hybrid auto-respond (opt-in):** when enabled, **4–5 star** reviews are AI-drafted and posted to Google automatically; **1–3 star** reviews always go through SMS approval
+- Surfaces drafts to **verified manager** via SMS for reviews that need human approval (no app login)
+- **Gating:** unverified storefronts sync reviews only — no AI drafts or alert SMS (positive auto-post does not require SMS contact when auto-respond is on)
 - Manager approves, writes own reply, or skips via SMS
-- Approved replies post to correct GBP listing
+- Approved replies post to correct GBP listing; `posted_via` tracks auto vs SMS-approved vs SMS-custom
 - Sentiment and star rating calibrate tone
+
+**(planned)** Claude sentiment guardrail to replace fixed star-rating threshold; dashboard edit/retract of auto-posted replies; intercept delay; owner digest of auto-posted positives.
 
 ### SMS notification bot
 
-For each **verified** storefront, new reviews trigger SMS to that location's manager with review content and AI draft when enabled.
+For each **verified** storefront, **1–3 star** reviews (or all reviews when auto-respond is off) trigger SMS to that location's manager with review content and AI draft when enabled.
 
 ### Auto-queue
 
@@ -72,5 +75,6 @@ Dashboard is secondary to SMS for day-to-day approvals. See [multi-location.md](
 
 ## Changelog
 
+- 2026-06-07: Hybrid auto-respond — opt-in 4–5 star auto-post; SMS only for 1–3 star when enabled
 - 2026-06-01: Storefronts token-based add-more-shops; Google accounts for additional logins only
 - 2026-05-19: Split from project-brief.md; per-storefront Autopilot and multi-GBP import
