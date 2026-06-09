@@ -92,7 +92,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 
 - **$20/month** flat per account (v1 — not per store)
 - Stripe-powered; cancel anytime from Settings
-- Pay before account creation on landing page
+- Pay before account creation on landing page; setup email to checkout address for finish-on-any-device
 
 **Sales line:** *"Cancel anytime. Stripe-secured. We earn your month."*
 
@@ -108,6 +108,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 | *"What if AI says something wrong?"* | Managers approve every **negative** reply from SMS before it posts. Positive auto-replies use your brand voice — you opt in, and you can turn it off anytime. |
 | *"Is $20/month worth it?"* | One extra customer from a higher rating pays for it. Most venues see dozens more reviews in month one. |
 | *"Can I cancel?"* | Anytime, one click, Stripe portal. Access through end of paid period. |
+| *"I paid but can't log in / wrong device."* | Check the inbox used at checkout for "Finish setting up" — link works on any device. Sign up with any email; billing and login can differ. Support: hello@rating.cards |
 
 ---
 
@@ -123,6 +124,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 
 ## Changelog
 
+- 2026-06-09: Payment Link setup email recovery objection; cross-device claim
 - 2026-06-07: Hybrid auto-respond pitch — 4–5 star auto-post opt-in; SMS only for negatives
 - 2026-06-01: Pitch/onboarding — add more storefronts from Settings without another Google sign-in
 - 2026-05-22: 4-step onboarding; org name from GBP; Settings **Your info**

@@ -65,7 +65,7 @@ This is the **single most important** setting for the pay-first flow. Without it
 
 4. Save.
 
-The `/checkout/success` route in the app reads `session_id` from the URL, stores it in `localStorage`, and routes the user to `/signup` (or claims immediately if they happened to already be logged in).
+The `/checkout/success` route calls **resolve-checkout-session** to exchange `session_id` for a signed claim token, stores the token in `localStorage`, and routes the user to `/signup` (or claims immediately if already logged in).
 
 > **Note:** Payment Links do **not** support a `cancel_url`. If a customer abandons checkout, Stripe just leaves them on the Payment Link page — there is no redirect back to our app. This only affects the new-user flow; the in-app `create-checkout-session` (used by churned users from `/settings`) still has both `success_url` and `cancel_url` configured.
 
@@ -91,11 +91,20 @@ A few notes:
 
 ## 5. Confirm webhook configuration
 
-Your existing `stripe-webhook` endpoint **does not need to change**. It already handles:
+Your existing `stripe-webhook` endpoint **does not need a new URL**. For Payment Link checkouts it now:
 
-- `checkout.session.completed` — now gracefully skips when `business_id` is absent from metadata (Payment Link checkouts), since provisioning happens via `claim-checkout-session` after signup.
-- `customer.subscription.updated` / `customer.subscription.deleted` — works because `claim-checkout-session` writes `business_id` into the Stripe **subscription** metadata at claim time.
-- `invoice.payment_failed` — already keyed by `stripe_subscription_id`, no metadata needed.
+- `checkout.session.completed` (no `business_id`) — upserts `pending_checkouts`, sends setup email via Resend (once per checkout)
+- `checkout.session.completed` (with `business_id`) — in-app re-subscribe; upserts `subscriptions` as before
+- `customer.subscription.updated` / `customer.subscription.deleted` — works because `claim-checkout-session` writes `business_id` into Stripe subscription metadata at claim time
+- `invoice.payment_failed` — keyed by `stripe_subscription_id`
+
+Set the claim signing secret (generate a random 32+ byte string):
+
+```bash
+npx supabase secrets set CLAIM_CHECKOUT_SECRET=your_random_secret_here
+```
+
+Confirm `APP_ORIGIN` is set (used for setup email links), e.g. `https://app.rating.cards`.
 
 To verify, in the [Webhooks dashboard](https://dashboard.stripe.com/webhooks):
 
@@ -108,7 +117,7 @@ To verify, in the [Webhooks dashboard](https://dashboard.stripe.com/webhooks):
 
 No other changes are needed on the Stripe side.
 
-**Edge Functions note:** Stripe-related functions (`stripe-webhook`, `claim-checkout-session`, `create-checkout-session`, `create-portal-session`) share a single client built from the official Stripe package with `target=denonext`, a pinned Stripe API version, `createFetchHttpClient()`, and—for webhook signature verification—`constructEventAsync` with `Stripe.createSubtleCryptoProvider()`. That layout matches Supabase’s recommended Stripe-on-Edge wiring and avoids Node-only crypto/microtask paths on Deno Deploy.
+**Edge Functions note:** Stripe-related functions (`stripe-webhook`, `resolve-checkout-session`, `claim-checkout-session`, `create-checkout-session`, `create-portal-session`) share a single client built from the official Stripe package with `target=denonext`, a pinned Stripe API version, `createFetchHttpClient()`, and—for webhook signature verification—`constructEventAsync` with `Stripe.createSubtleCryptoProvider()`. That layout matches Supabase’s recommended Stripe-on-Edge wiring and avoids Node-only crypto/microtask paths on Deno Deploy.
 
 ---
 
@@ -125,11 +134,11 @@ The simplest workflow is to create **two Payment Links** (one in test, one in li
 
 ## Considerations and gotchas
 
-- **localStorage required**: the pay-first flow relies on `localStorage` to carry the `session_id` from `/checkout/success` through signup. If a user has third-party cookies blocked in a way that also disables `localStorage` for this origin, the claim won't fire. In practice this is rare on first-party domains, but worth knowing.
-- **Cross-device flow is not supported (yet)**: if a user pays on their phone and then signs up on their laptop, the `session_id` doesn't travel. The plan's out-of-scope section mentions an email-matching fallback as a future enhancement; for now, those users would land on `/setup-error` and need to contact support.
-- **Email mismatch is fine**: the user enters their email on Stripe, but they can sign up later with any email or Google account. The claim function ties the subscription to whatever Supabase user holds the JWT when `claim-checkout-session` is called — the Stripe email isn't checked.
-- **Re-subscribe still uses the Edge Function**: churned users re-subscribing from `/settings` are routed through `create-checkout-session` (which requires auth and embeds `business_id` in session metadata). That flow is unaffected by the Payment Link and continues to work as before.
-- **Idempotency**: `claim-checkout-session` returns `409 already_subscribed` if the user already has an active subscription, so a stale `session_id` in `localStorage` after the first claim is safe — it just no-ops and gets cleared.
+- **localStorage required**: the pay-first flow stores a **claim token** (not raw `session_id`) in `localStorage` through signup/OAuth round-trips. If localStorage is disabled for this origin, the user can still recover via the setup email link.
+- **Cross-device supported**: if a user pays on one device and signs up on another, the setup email to the **checkout address** contains `/signup?claim=…` with the same token.
+- **Email mismatch is fine**: checkout email (receipts, setup email) can differ from signup email. Onboarding shows an informational billing notice when they differ.
+- **Re-subscribe still uses the Edge Function**: churned users re-subscribing from `/settings` use `create-checkout-session` (auth required, `business_id` in metadata). Unaffected by Payment Link flow.
+- **Idempotency**: `claim-checkout-session` returns `409 already_subscribed` if the user already has an active subscription; stale tokens are cleared safely. A subscription cannot be claimed by two different accounts.
 
 ---
 
@@ -142,4 +151,6 @@ After setting everything up, confirm:
 - [ ] The landing page CTA href matches the Payment Link URL.
 - [ ] The `STRIPE_PRICE_ID` secret in Supabase matches the price the Payment Link is selling.
 - [ ] The webhook endpoint listens to `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`, and `invoice.payment_failed`.
+- [ ] `CLAIM_CHECKOUT_SECRET` and `APP_ORIGIN` are set in Supabase secrets.
 - [ ] A test purchase in **test mode** completes, redirects to `/checkout/success`, prompts for signup, and lands the user on `/onboarding` with a subscription row in the database.
+- [ ] Abandoned-pay test: pay, close tab, open setup email on another device, complete signup via claim link.

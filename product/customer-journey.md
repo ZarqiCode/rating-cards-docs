@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [onboarding, billing]
 auto_sync: true
-last_verified: 2026-06-07
+last_verified: 2026-06-09
 ---
 
 # Customer journey
@@ -30,7 +30,7 @@ rating.cards team sets up and activates devices before delivery. Owner receives 
 
 ## 5. Autopilot subscription
 
-After seeing review volume increase, owner subscribes from **rating.cards** landing page. Stripe payment **before** account creation. After paying, they sign up; subscription links automatically. No dashboard login required to subscribe.
+After seeing review volume increase, owner subscribes from **rating.cards** landing page. Stripe payment **before** account creation. After paying, they receive a setup email at the checkout address and can create an account on any device; subscription links automatically via a signed claim token. No dashboard login required to subscribe.
 
 ## 6. Onboarding
 
@@ -51,6 +51,7 @@ Autopilot behaviour is **per storefront** once manager lines verify. See [owner-
 
 ## Changelog
 
+- 2026-06-09: Payment Link setup email and cross-device claim recovery
 - 2026-06-07: Onboarding reorder — brand voice required before SMS activation checklist
 - 2026-05-22: Onboarding starts at Google Connect; org name auto-derived from GBP
 - 2026-05-19: Split from project-brief.md; multi-location onboarding and Settings expansion

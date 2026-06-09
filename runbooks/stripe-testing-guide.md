@@ -46,16 +46,19 @@ npx supabase secrets set STRIPE_SECRET_KEY=sk_test_your_test_key_here
 npx supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_your_signing_secret_here
 npx supabase secrets set STRIPE_PRICE_ID=price_your_price_id_here
 npx supabase secrets set APP_ORIGIN=https://your-app.vercel.app
+npx supabase secrets set CLAIM_CHECKOUT_SECRET=your_random_secret_here
 ```
 
 ## Step 3: Run Database Migration
 
-Run `supabase/migrations/stripe_subscriptions.sql` in the Supabase SQL Editor.
+Run `supabase/migrations/stripe_subscriptions.sql` and `supabase/migrations/pending_checkouts.sql` in the Supabase SQL Editor.
 
 ## Step 4: Deploy Edge Functions
 
 ```bash
 npx supabase functions deploy create-checkout-session
+npx supabase functions deploy resolve-checkout-session
+npx supabase functions deploy claim-checkout-session
 npx supabase functions deploy stripe-webhook
 npx supabase functions deploy create-portal-session
 npx supabase functions deploy admin-subscriptions
@@ -147,6 +150,21 @@ Verify in app: Dashboard shows locked Autopilot panel, Billing shows re-subscrib
 5. Verify: Only the subscribed business receives the email
 6. Insert a low-rating review for the unsubscribed business
 7. Verify: `send-negative-alert` skips it with `"reason": "Business does not have an active subscription"`
+
+### Test 9: Payment Link — pay-first signup
+
+1. Complete checkout via Payment Link (see [stripe-payment-link-setup.md](./stripe-payment-link-setup.md))
+2. Verify redirect to `/checkout/success` → signup with test account
+3. Verify `pending_checkouts` row exists, then `status = claimed` after signup
+4. Verify setup email received at checkout address (Resend dashboard)
+5. **Cross-device:** pay, close browser, open setup email link on another device → signup → onboarding
+
+### Test 10: Payment Link — double claim rejected
+
+1. Complete Payment Link checkout and note claim token (or use setup email link)
+2. Sign up as User A and complete claim
+3. Sign out; attempt same claim link as User B
+4. Verify claim fails with subscription already linked; User B lands on `/setup-error`
 
 ## Stripe Test Cards Reference
 

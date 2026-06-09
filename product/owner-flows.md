@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [onboarding, sms, billing, multi-location, managers]
 auto_sync: true
-last_verified: 2026-06-07
+last_verified: 2026-06-09
 ---
 
 # Owner flows
@@ -13,8 +13,10 @@ last_verified: 2026-06-07
 ## Account linking
 
 1. rating.cards team creates **business profile** when first device is provisioned (no customer account yet)
-2. Owner subscribes via Stripe **before** signup
-3. Owner creates account; subscription and business profile link automatically — device history preserved
+2. Owner subscribes via Stripe Payment Link **before** signup
+3. System sends setup email to checkout address; browser path stores signed claim token through signup
+4. Owner creates account (any email); subscription and business profile link automatically — device history preserved
+5. If checkout email ≠ signup email, onboarding shows an informational billing notice (receipts vs login)
 
 ## Onboarding (one-time)
 
@@ -87,6 +89,7 @@ Organisation-level email every Monday. SMS handles moment-to-moment; pulse handl
 
 - 2026-06-07: Onboarding reorder — Google → brand voice (required) → SMS activation checklist → honest finish; 3-segment progress bar
 - 2026-06-07: Hybrid auto-respond — opt-in 4–5 star auto-post; 1–3 star SMS approval unchanged
+- 2026-06-09: Payment Link claim tokens, setup email recovery, billing email notice on onboarding
 - 2026-06-01: Storefronts add-more-shops modal (token-based picker); Google accounts only for extra logins; onboarding always shows location checkbox
 - 2026-05-23: SMS consent sms_v2 with Privacy/Terms links on onboarding, Settings, and verify-sms page
 - 2026-05-22: 4-step onboarding (drop manual name step); org name from GBP; Settings **Your info**

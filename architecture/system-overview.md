@@ -3,7 +3,7 @@ product: rating.cards
 layer: architecture
 domains: [admin, multi-location]
 auto_sync: true
-last_verified: 2026-06-07
+last_verified: 2026-06-09
 ---
 
 # System overview
@@ -34,7 +34,7 @@ last_verified: 2026-06-07
 
 ## Storefront data model (summary)
 
-- **Business** — organisation; links to user account after subscription
+- **Business** — organisation; links to user account after subscription; optional `checkout_email` from Stripe
 - **Storefront / location** — GBP location imported per business; soft-deactivate in v1
 - **Devices** — organisation-scoped in v1; `public_id`, `status`, `destination_url`
 - **Reviews** — synced per storefront from GBP; `ai_reply_status`, `posted_via` (`auto` | `sms_approved` | `sms_custom`)
@@ -53,7 +53,7 @@ See [product/multi-location.md](../product/multi-location.md) for v1 boundaries.
 | `sync-reviews` | Scheduled/manual review sync |
 | `send-review-sms`, `handle-sms-reply`, `approve-reply`, `respond-to-review` | SMS review workflow; `respond-to-review` branches on `shouldAutoRespond()` — auto-posts 4–5 star when `auto_respond_enabled`, else SMS handoff |
 | `create-sms-verification`, `verify-sms-public`, `send-otp-sms`, `verify-otp-sms` | Manager phone verification |
-| `create-checkout-session`, `claim-checkout-session`, `stripe-webhook`, `create-portal-session` | Billing |
+| `create-checkout-session`, `resolve-checkout-session`, `claim-checkout-session`, `stripe-webhook`, `create-portal-session` | Billing |
 | `send-weekly-pulse`, `send-negative-alert` | Email |
 | `retry-failed-replies`, `handle-unsubscribe` | Reliability / compliance |
 
@@ -65,6 +65,8 @@ CEO routes `/dashboard` and `/settings` share an **AppLayout** shell: header wit
 
 | Route | Purpose |
 |-------|---------|
+| `/checkout/success` | Payment Link redirect; exchanges session for claim token |
+| `/setup-error` | Claim/provisioning failure recovery |
 | `/onboarding` | CEO guided setup |
 | `/dashboard` | Overview — org-default proof metrics, alerts, system status (AppLayout) |
 | `/settings` | Billing, Locations, Notifications (AppLayout) |
@@ -74,6 +76,7 @@ CEO routes `/dashboard` and `/settings` share an **AppLayout** shell: header wit
 
 ## Changelog
 
+- 2026-06-09: Payment Link claim flow — pending_checkouts, resolve-checkout-session, setup email
 - 2026-06-07: Hybrid auto-respond — `auto_respond_enabled`, `posted_via`, `shouldAutoRespond()` routing in `respond-to-review`
 - 2026-05-21: Overview page redesign at `/dashboard` (nav label Overview)
 - 2026-05-19: Initial architecture doc from project-brief Domains + codebase
