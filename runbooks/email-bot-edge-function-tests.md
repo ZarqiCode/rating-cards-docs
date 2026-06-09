@@ -32,7 +32,7 @@ These functions expect the **Authorization** header to match your project’s **
 
 **Send request.**
 
-**Expected (success):** JSON such as `{ "synced": <number>, "businesses": <number> }`, or `{ "synced": 0, "businesses": 0, "message": "No active connections" }` if no Google Business Profile connections exist yet.
+**Expected (success):** JSON such as `{ "synced": <number>, "fetched": <number>, "locations": <number> }`. `synced` is the count of **newly inserted** reviews; `fetched` is the total pulled from Google (often much larger). On repeat runs with no new reviews, expect `synced: 0` while `fetched` may still be > 0. Early exits use the same shape, e.g. `{ "synced": 0, "fetched": 0, "locations": 0, "message": "No subscribed businesses" }` or `{ "synced": 0, "fetched": 0, "locations": 0, "message": "No active locations to sync" }`.
 
 **If you see `401`:** Check the response body for a `stage` field. `wrong_role` means the JWT's `role` claim is not `service_role` — set **Role** to **`service role`** in the test UI. `missing_header` or `bad_scheme` means the `Authorization: Bearer` header was not attached.
 
