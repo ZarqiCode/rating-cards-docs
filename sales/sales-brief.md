@@ -18,7 +18,7 @@
 
 | Who | How they use rating.cards |
 |-----|---------------------------|
-| **Owner / CEO** | Web app: one-time onboarding, then dashboard + **Settings** for all ongoing config (locations, SMS, brand voice, billing) |
+| **Owner / CEO** | Web app: one-time onboarding, then dashboard + **Settings** for all ongoing config (locations, SMS, brand voice on one scrollable panel, billing) |
 | **Store manager** | SMS only — verify phone once, approve review replies from text. No app login. |
 
 **Sales line:** *"Your managers don't need another app. They get a text when a review comes in, tap approve, done. You keep oversight from the dashboard across every store."*
@@ -124,6 +124,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 
 ## Changelog
 
+- 2026-06-10: Settings brand voice — single-page card layout; tweak any field without replaying a wizard
 - 2026-06-09: Payment Link setup email recovery objection; cross-device claim
 - 2026-06-07: Hybrid auto-respond pitch — 4–5 star auto-post opt-in; SMS only for negatives
 - 2026-06-01: Pitch/onboarding — add more storefronts from Settings without another Google sign-in

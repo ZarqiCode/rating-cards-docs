@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [onboarding, sms, billing, multi-location, managers]
 auto_sync: true
-last_verified: 2026-06-09
+last_verified: 2026-06-10
 ---
 
 # Owner flows
@@ -68,7 +68,7 @@ If no active storefronts exist after onboarding, Overview shows a blocking alert
 | **Your info** | Edit organisation name (auto-filled from GBP on first import) |
 | **Storefronts** (locations) | **Add more shops** modal — pick unimported GBP locations from already linked Google logins (no re-OAuth); list active/paused storefronts; pause a shop; post-import prompt to set manager phones |
 | **Notifications** | Per-store manager lines; invite link + CEO inline OTP; verified lines read-only |
-| **Brand voice** | Edit shared AI draft personality; toggle **auto-respond** for 4–5 star reviews (default off) |
+| **Brand voice** | Single scrollable panel with five cards (tone, story, reply style, autopilot, advanced); read-only summary strip; incomplete-setup callout lists missing required fields; **Save changes** / **Discard** sticky footer when edited; hash anchors (`#tone`, `#story`, `#reply-style`, `#autopilot`, `#custom-instructions`) for deep links from Overview alerts |
 | **Google accounts** (integrations) | Edge case: link an **additional** Google login (separate owner email); success modal → add shops in **Storefronts** |
 
 Sections use `?section=` in the URL. Smart default opens the first incomplete area (locations → notifications → brand voice → billing).
@@ -87,6 +87,7 @@ Organisation-level email every Monday. SMS handles moment-to-moment; pulse handl
 
 ## Changelog
 
+- 2026-06-10: Brand voice Settings — flat card panel replaces 3-step sub-wizard; summary strip, incomplete callout, dirty-state Save/Discard footer, hash deep links from Overview alerts
 - 2026-06-07: Onboarding reorder — Google → brand voice (required) → SMS activation checklist → honest finish; 3-segment progress bar
 - 2026-06-07: Hybrid auto-respond — opt-in 4–5 star auto-post; 1–3 star SMS approval unchanged
 - 2026-06-09: Payment Link claim tokens, setup email recovery, billing email notice on onboarding
