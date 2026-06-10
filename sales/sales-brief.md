@@ -18,7 +18,7 @@
 
 | Who | How they use rating.cards |
 |-----|---------------------------|
-| **Owner / CEO** | Web app: one-time onboarding, then dashboard + **Settings** for all ongoing config (locations, SMS, brand voice on one scrollable panel, billing) |
+| **Owner / CEO** | Web app: one-time onboarding, then Overview + **Settings** for all ongoing config (storefronts, SMS, brand voice on one scrollable panel, billing) |
 | **Store manager** | SMS only — verify phone once, approve review replies from text. No app login. |
 
 **Sales line:** *"Your managers don't need another app. They get a text when a review comes in, tap approve, done. You keep oversight from the dashboard across every store."*
@@ -29,10 +29,10 @@
 
 | Step | What happens | Sales angle |
 |------|--------------|-------------|
-| **1. Connect Google** | OAuth once; **checkbox pick storefronts**; add more later from Settings without signing in again | One login usually covers every location — no manual name step |
-| **2. Manager phones (optional)** | Per-store manager numbers; async SMS verification | Managers verify on their own time — setup doesn't block |
-| **3. Brand voice** | Shared Q&A teaches AI how the brand talks; optional **auto-respond** for 4–5 star reviews | One voice profile; drafts use each **storefront name**; turn on automation for positives |
-| **4. Confirmation** | Autopilot live per store as managers verify | Automation turns on location by location |
+| **1. Connect Google** | OAuth once; **checkbox pick storefronts**; add more later from Settings without signing in again | One login usually covers every storefront — no manual name step |
+| **2. Brand voice** | Shared Q&A teaches AI how the brand talks; optional **auto-respond** for 4–5 star reviews | One voice profile; drafts use each **storefront name**; turn on automation for positives |
+| **3. Manager phones** | Per-store manager numbers; async SMS verification; verify later OK per storefront | Managers verify on their own time — CEO must decide per store, but verification doesn't block finish |
+| **4. Confirmation** | Honest status headline; Autopilot live per storefront as manager lines verify | Automation turns on storefront by storefront |
 
 **Objection:** *"I don't have time to set this up."* → Under 10 minutes once. We also set up physical cards before they ship.
 
@@ -62,7 +62,7 @@
 
 ### Gating (important for honest selling)
 
-Stores **without** a verified manager still sync reviews to the dashboard — but no SMS alerts or AI drafts until someone verifies. Protects cost and trust.
+Stores **without** a verified manager still sync reviews to Overview. **Manager SMS alerts** and **negative-review drafts** require a verified line. When **auto-respond** is on, **4–5 star** reviews can still get automatic AI replies posted without verified SMS — negatives always need a verified manager.
 
 ### Weekly pulse email
 
@@ -82,7 +82,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 
 ## Expansion
 
-- Add GBP locations from **Settings → Locations**
+- Add GBP storefronts from **Settings → Storefronts**
 - More devices across stores (org-scoped in v1)
 - Multi-store operators: one subscription, multiple storefronts, manager SMS per location
 
@@ -124,6 +124,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 
 ## Changelog
 
+- 2026-06-10: Onboarding table reorder (Google → brand voice → manager SMS); gating copy matches code; Settings → Storefronts; Overview wording
 - 2026-06-10: Settings brand voice — single-page card layout; tweak any field without replaying a wizard
 - 2026-06-09: Payment Link setup email recovery objection; cross-device claim
 - 2026-06-07: Hybrid auto-respond pitch — 4–5 star auto-post opt-in; SMS only for negatives

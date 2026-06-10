@@ -37,13 +37,15 @@ Route gates: incomplete onboarding cannot open `/settings`; completed users cann
 
 ## Manager verification (no app login)
 
-Managers receive SMS with link to **`/verify-sms/:token`**. OTP confirmation verifies the line; the page shows SMS program disclosures and links to [Privacy Policy](https://www.rating.cards/privacy) and [Terms of Service](https://www.rating.cards/terms). Automation (alerts + AI drafts) turns on for that storefront when verified.
+Managers receive SMS with link to **`/verify-sms/:token`**. OTP confirmation verifies the line; the page shows SMS program disclosures and links to [Privacy Policy](https://www.rating.cards/privacy) and [Terms of Service](https://www.rating.cards/terms). When verified, that storefront gets **manager SMS alerts** and the **negative-review approval loop** (AI draft → manager approves via SMS).
+
+**Verification gating (code truth):** Unverified storefronts still sync reviews. Manager SMS alerts and negative-review drafts require a verified line. When **auto-respond** is enabled in Brand voice, **4–5 star** reviews can get an AI reply posted to Google **without** a verified manager line — implementation allows auto-post when `rating >= 4` and `auto_respond_enabled` is true.
 
 ## Day-to-day: SMS approval loop
 
 For verified storefronts, managers receive SMS on **1–3 star** reviews (and on all reviews when auto-respond is off). Two-tap approve, write own reply, or skip. Queue handles backlog. CEOs do not need to participate in SMS thread unless they are also the verified manager.
 
-When **auto-respond** is enabled in Brand voice (Settings or onboarding), **4–5 star** reviews get an AI reply posted to Google automatically — no SMS. Negative reviews always go through the SMS approval loop.
+When **auto-respond** is enabled in Brand voice (Settings or onboarding), **4–5 star** reviews get an AI reply posted to Google automatically — no SMS. **1–3 star** reviews always go through the SMS approval loop and require a verified manager line.
 
 ## Overview (CEO home)
 
@@ -87,6 +89,7 @@ Organisation-level email every Monday. SMS handles moment-to-moment; pulse handl
 
 ## Changelog
 
+- 2026-06-10: Copy alignment — verification gating doc matches code (4–5 star auto-post without verified SMS when auto-respond on); manager SMS vs negative-review drafts wording
 - 2026-06-10: Brand voice Settings — flat card panel replaces 3-step sub-wizard; summary strip, incomplete callout, dirty-state Save/Discard footer, hash deep links from Overview alerts
 - 2026-06-07: Onboarding reorder — Google → brand voice (required) → SMS activation checklist → honest finish; 3-segment progress bar
 - 2026-06-07: Hybrid auto-respond — opt-in 4–5 star auto-post; 1–3 star SMS approval unchanged
