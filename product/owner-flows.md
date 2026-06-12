@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [onboarding, sms, billing, multi-location, managers]
 auto_sync: true
-last_verified: 2026-06-10
+last_verified: 2026-06-12
 ---
 
 # Owner flows
@@ -23,7 +23,7 @@ last_verified: 2026-06-10
 After signup, guided flow:
 
 1. **Google connection** — OAuth once; **checkbox list of GBP storefronts** (always shown, even for a single location); organisation name auto-filled from GBP account on first import. A second Google login is optional later under **Settings → Google accounts** (info icon on step 1 explains this).
-2. **Brand voice (required)** — single-page form; shared Q&A profile for AI drafts across all storefronts; optional **auto-respond** toggle (4–5 star reviews auto-post when enabled; 1–3 star still SMS). Cannot skip.
+2. **Brand voice (required)** — single-page form: business type, formality, emoji preference, criticism handling, and sign-off; optional “sound even more like you” block (voice samples, phrases, words to avoid); shared profile for AI drafts across all storefronts; optional **auto-respond** toggle (4–5 star reviews auto-post when enabled; 1–3 star still SMS). Cannot skip.
 3. **Per-store SMS activation** — per-location checklist with status badges (Not started / Pending verification / Verified / Set up later); manager phone numbers, TCPA consent (`sms_v2` checkbox + Privacy/Terms links); **async** verification via public link + OTP; CEO must decide per storefront before continuing; verification not required to finish onboarding
 4. **Review & finish** — honest status headline (4 tiers) plus per-storefront SMS summary; Autopilot live per storefront as manager lines verify
 
@@ -70,7 +70,7 @@ If no active storefronts exist after onboarding, Overview shows a blocking alert
 | **Your info** | Edit organisation name (auto-filled from GBP on first import) |
 | **Storefronts** (locations) | **Add more shops** modal — pick unimported GBP locations from already linked Google logins (no re-OAuth); list active/paused storefronts; pause a shop; post-import prompt to set manager phones |
 | **Notifications** | Per-store manager lines; invite link + CEO inline OTP; verified lines read-only |
-| **Brand voice** | Single scrollable panel with five cards (tone, story, reply style, autopilot, advanced); read-only summary strip; incomplete-setup callout lists missing required fields; **Save changes** / **Discard** sticky footer when edited; hash anchors (`#tone`, `#story`, `#reply-style`, `#autopilot`, `#custom-instructions`) for deep links from Overview alerts |
+| **Brand voice** | Single scrollable panel with five cards (your business, your voice, handling reviews, autopilot, optional advanced); read-only summary strip; incomplete-setup callout lists missing required fields; **Save changes** / **Discard** sticky footer when edited; hash anchors (`#business`, `#voice`, `#reply-style`, `#autopilot`, `#advanced`) for deep links from Overview alerts |
 | **Google accounts** (integrations) | Edge case: link an **additional** Google login (separate owner email); success modal → add shops in **Storefronts** |
 
 Sections use `?section=` in the URL. Smart default opens the first incomplete area (locations → notifications → brand voice → billing).
@@ -90,7 +90,7 @@ Organisation-level email every Monday. SMS handles moment-to-moment; pulse handl
 ## Changelog
 
 - 2026-06-10: Copy alignment — verification gating doc matches code (4–5 star auto-post without verified SMS when auto-respond on); manager SMS vs negative-review drafts wording
-- 2026-06-10: Brand voice Settings — flat card panel replaces 3-step sub-wizard; summary strip, incomplete callout, dirty-state Save/Discard footer, hash deep links from Overview alerts
+- 2026-06-12: Brand voice v2 — expression-focused fields (business type, formality, emoji, criticism, sign-off); optional voice samples/phrases/avoid list; removed personality tags and response length
 - 2026-06-07: Onboarding reorder — Google → brand voice (required) → SMS activation checklist → honest finish; 3-segment progress bar
 - 2026-06-07: Hybrid auto-respond — opt-in 4–5 star auto-post; 1–3 star SMS approval unchanged
 - 2026-06-09: Payment Link claim tokens, setup email recovery, billing email notice on onboarding

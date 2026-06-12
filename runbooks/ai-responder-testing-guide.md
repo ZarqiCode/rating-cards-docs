@@ -16,7 +16,7 @@ Before testing, ensure the following are in place:
 
 2. **A test business** with:
    - An active subscription (`subscriptions.status = 'active'`)
-   - Brand voice settings configured (`brand_voice_settings` row exists with `personality_tags` populated)
+   - Brand voice settings configured (`brand_voice_settings` row with required v2 fields: `business_type`, `formality`, `emoji_usage`, `criticism_style`, `signature_type`, and `signature_name` when sign-off is owner name)
    - An email notification contact (`email_notification_contacts` row with `is_active = true`)
 
 3. **Resend API** working (for negative alert emails with AI draft).
@@ -36,7 +36,7 @@ Before testing, ensure the following are in place:
 ```sql
 SELECT b.id AS business_id, b.business_name, b.city,
        s.status AS subscription_status,
-       bv.personality_tags, bv.response_length, bv.criticism_style
+       bv.business_type, bv.formality, bv.emoji_usage, bv.criticism_style, bv.signature_type
 FROM businesses b
 LEFT JOIN subscriptions s ON s.business_id = b.id
 LEFT JOIN brand_voice_settings bv ON bv.business_id = b.id

@@ -124,6 +124,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 
 ## Changelog
 
+- 2026-06-12: Brand voice v2 — owners set business type, formality, and emoji; optional real reply samples teach the AI their voice (no personality-tag wizard)
 - 2026-06-12: Objection handler — AI replies use hardcoded human-voice guardrails, not generic corporate tone
 - 2026-06-10: Onboarding table reorder (Google → brand voice → manager SMS); gating copy matches code; Settings → Storefronts; Overview wording
 - 2026-06-10: Settings brand voice — single-page card layout; tweak any field without replaying a wizard
