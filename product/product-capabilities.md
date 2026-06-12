@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [devices, sms, gbp, email, onboarding]
 auto_sync: true
-last_verified: 2026-06-07
+last_verified: 2026-06-12
 ---
 
 # Product capabilities
@@ -34,6 +34,7 @@ Philosophy: hospitality owners should rarely log into a dashboard. Day-to-day ru
 - Manager approves, writes own reply, or skips via SMS
 - Approved replies post to correct GBP listing; `posted_via` tracks auto vs SMS-approved vs SMS-custom
 - Sentiment and star rating calibrate tone
+- **Human-voice guardrails (hardcoded):** every draft follows eight anti-slop rules (plain owner tone, no corporate stock phrases, no em/en dashes, no AI filler words) plus five few-shot examples; sign-off is the owner or business name on its own line
 
 **(planned)** Claude sentiment guardrail to replace fixed star-rating threshold; dashboard edit/retract of auto-posted replies; intercept delay; owner digest of auto-posted positives.
 
@@ -75,6 +76,7 @@ Dashboard is secondary to SMS for day-to-day approvals. See [multi-location.md](
 
 ## Changelog
 
+- 2026-06-12: AI review responder — hardcoded human-voice rules, rewritten few-shot examples, newline sign-off (no em dash)
 - 2026-06-07: Hybrid auto-respond — opt-in 4–5 star auto-post; SMS only for 1–3 star when enabled
 - 2026-06-01: Storefronts token-based add-more-shops; Google accounts for additional logins only
 - 2026-05-19: Split from project-brief.md; per-storefront Autopilot and multi-GBP import

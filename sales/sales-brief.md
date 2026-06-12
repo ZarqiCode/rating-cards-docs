@@ -104,7 +104,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 |-----------|----------|
 | *"I run multiple locations."* | One account, import every GBP location, assign a manager phone per store. Flat $20/mo in v1. |
 | *"My managers won't use software."* | They don't. SMS only — verify once, approve from text forever. |
-| *"AI replies sound generic."* | Brand voice Q&A + storefront name in every draft. Sounds like you, not a bot. |
+| *"AI replies sound generic."* | Brand voice Q&A + storefront name in every draft, plus built-in guardrails that block corporate stock phrases and AI filler. Replies read like the owner wrote them, not a bot. |
 | *"What if AI says something wrong?"* | Managers approve every **negative** reply from SMS before it posts. Positive auto-replies use your brand voice — you opt in, and you can turn it off anytime. |
 | *"Is $20/month worth it?"* | One extra customer from a higher rating pays for it. Most venues see dozens more reviews in month one. |
 | *"Can I cancel?"* | Anytime, one click, Stripe portal. Access through end of paid period. |
@@ -124,6 +124,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 
 ## Changelog
 
+- 2026-06-12: Objection handler — AI replies use hardcoded human-voice guardrails, not generic corporate tone
 - 2026-06-10: Onboarding table reorder (Google → brand voice → manager SMS); gating copy matches code; Settings → Storefronts; Overview wording
 - 2026-06-10: Settings brand voice — single-page card layout; tweak any field without replaying a wizard
 - 2026-06-09: Payment Link setup email recovery objection; cross-device claim
