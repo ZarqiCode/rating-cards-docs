@@ -3,7 +3,7 @@ product: rating.cards
 layer: architecture
 domains: [admin, multi-location]
 auto_sync: true
-last_verified: 2026-06-09
+last_verified: 2026-06-12
 ---
 
 # System overview
@@ -48,7 +48,8 @@ See [product/multi-location.md](../product/multi-location.md) for v1 boundaries.
 | Function | Role |
 |----------|------|
 | `card-redirect` | Device tap → redirect + log |
-| `activate-device`, `admin-devices`, `admin-businesses`, `bulk-provision` | Admin provisioning |
+| `activate-device`, `admin-devices`, `admin-businesses` (`?action=brand-voice`), `bulk-provision` | Admin provisioning; `brand-voice` returns saved settings for AI Demo |
+| `demo-respond` | Admin-only AI reply preview — fetches `brand_voice_settings` by `business_id`, no DB writes |
 | `google-auth-url`, `google-callback`, `google-import-reviews` | GBP OAuth and location import |
 | `sync-reviews` | Scheduled/manual review sync |
 | `send-review-sms`, `handle-sms-reply`, `approve-reply`, `respond-to-review` | SMS review workflow; `respond-to-review` branches on `shouldAutoRespond()` — auto-posts 4–5 star when `auto_respond_enabled`, else SMS handoff |
@@ -72,10 +73,13 @@ CEO routes `/dashboard` and `/settings` share an **AppLayout** shell: header wit
 | `/settings` | Billing, Locations, Notifications (AppLayout) |
 | `/verify-sms/:token` | Public manager verification |
 | `/setup/:publicId` | Legacy unclaimed device setup |
-| `/admin` | Internal admin panel (separate dark shell) |
+| `/admin` | Internal admin panel (separate dark shell); includes **AI Demo** tab |
+
+Shared prompt logic for `respond-to-review` and `demo-respond` lives in `_shared/brand-voice-prompt.ts` (`buildSystemPrompt`, `buildUserMessage`, `callClaude`).
 
 ## Changelog
 
+- 2026-06-12: `demo-respond` edge function + `_shared/brand-voice-prompt.ts`; admin AI Demo tab
 - 2026-06-09: Payment Link claim flow — pending_checkouts, resolve-checkout-session, setup email
 - 2026-06-07: Hybrid auto-respond — `auto_respond_enabled`, `posted_via`, `shouldAutoRespond()` routing in `respond-to-review`
 - 2026-05-21: Overview page redesign at `/dashboard` (nav label Overview)

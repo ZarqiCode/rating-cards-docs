@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [admin, devices]
 auto_sync: true
-last_verified: 2026-05-20
+last_verified: 2026-06-12
 ---
 
 # Admin flows
@@ -37,7 +37,23 @@ When a customer purchases hardware, the team provisions devices **before deliver
 - Device list, detail, bulk provision wizard
 - Print assets generation (cards, stickers, etc.)
 - Subscription overview (admin view)
+- **AI Demo** — test how a business's saved brand voice responds to a pasted review (admin-only; no DB writes, no Google posting)
 - Test mode toggle for internal QA
+
+## AI Demo (internal)
+
+**Navigation:** Admin panel → **AI Demo** tab.
+
+**Purpose:** Let Lucas or Antonio preview AI-generated review replies using a business's saved brand voice — without inserting reviews, triggering SMS, or posting to Google.
+
+**Flow:**
+
+1. **Search and select a business** — searchable list (same data as Businesses tab).
+2. **View brand voice snapshot** — read-only summary of saved `brand_voice_settings` (formality, emoji, criticism handling, sign-off, voice samples, etc.). If no settings exist, generation is blocked with a clear message.
+3. **Enter a test review** — star rating (1–5), reviewer name, review text.
+4. **Generate reply** — calls the `demo-respond` edge function (admin-gated). Returns the AI reply and a collapsible view of the exact system prompt sent to Claude.
+
+**Access:** Admin accounts only (same gate as other admin endpoints). No subscription or SMS requirements — this is an internal tuning tool.
 
 ## Devices and multi-location (v1)
 
@@ -50,5 +66,6 @@ Devices are **organisation-scoped** — not assigned row-for-row to storefront r
 
 ## Changelog
 
+- 2026-06-12: Added AI Demo tab — admin-only brand voice preview with `demo-respond` edge function
 - 2026-05-20: Admin header shares user menu with CEO app; dark Admin entry from CEO header
 - 2026-05-19: Split from project-brief.md device setup section

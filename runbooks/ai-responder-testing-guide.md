@@ -211,6 +211,22 @@ VALUES (
 
 ---
 
+## Admin AI Demo (fastest prompt iteration)
+
+For quick brand-voice tuning without inserting reviews or triggering the full pipeline:
+
+1. Sign in as admin at **app.rating.cards/admin**
+2. Open the **AI Demo** tab
+3. Search and select a business with saved brand voice settings
+4. Paste a test review (rating, reviewer name, text) and click **Generate reply**
+5. Inspect the reply and expand **Show system prompt** to verify the exact prompt sent to Claude
+
+This calls `demo-respond` (admin-gated). It fetches `brand_voice_settings` server-side by `business_id` and performs **no DB writes**, SMS, or Google posting. Subscription and SMS gates do not apply.
+
+Deploy `demo-respond` alongside `respond-to-review` when using this tab in production.
+
+---
+
 ## Direct HTTP testing (bypass trigger)
 
 Call `respond-to-review` directly to iterate on prompt quality without inserting rows:
