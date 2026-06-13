@@ -158,6 +158,7 @@ Verify in app: Dashboard shows locked Autopilot panel, Billing shows re-subscrib
 3. Verify `pending_checkouts` row exists, then `status = claimed` after signup
 4. Verify setup email received at checkout address (Resend dashboard)
 5. **Cross-device:** pay, close browser, open setup email link on another device → signup → onboarding
+6. If the Payment Link has a free trial: verify `subscriptions.status = trialing` in Supabase and full dashboard access; Stripe subscription shows trial end date
 
 ### Test 10: Payment Link — double claim rejected
 

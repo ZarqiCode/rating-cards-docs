@@ -45,6 +45,16 @@ If the Price IDs ever diverge, churned users re-subscribing from `/settings` wou
 4. **Quantity**: fixed, 1.
 5. Leave the rest of the defaults; the important options are in step 3 below.
 
+### Optional: 7-day free trial (card required)
+
+To offer a trial before the first charge:
+
+1. In the Payment Link editor, enable **Include a free trial** and set **7 days**.
+2. Leave **Let customers start trial without payment method** **unchecked** — customers must enter a card; Stripe charges when the trial ends.
+3. No app code changes beyond what is already deployed: pending checkout accepts `payment_status = no_payment_required`, and subscriptions are stored as **`trialing`** until the first invoice.
+
+Do **not** enable no-card trials unless you also configure Stripe trial end behavior and email reminders — the app does not collect payment methods outside Checkout.
+
 Click **Create link** — Stripe will generate a URL like `https://buy.stripe.com/xxxxx`. Don't share it yet; we need to configure the success URL first.
 
 ---
@@ -152,5 +162,5 @@ After setting everything up, confirm:
 - [ ] The `STRIPE_PRICE_ID` secret in Supabase matches the price the Payment Link is selling.
 - [ ] The webhook endpoint listens to `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`, and `invoice.payment_failed`.
 - [ ] `CLAIM_CHECKOUT_SECRET` and `APP_ORIGIN` are set in Supabase secrets.
-- [ ] A test purchase in **test mode** completes, redirects to `/checkout/success`, prompts for signup, and lands the user on `/onboarding` with a subscription row in the database.
+- [ ] A test purchase in **test mode** completes, redirects to `/checkout/success`, prompts for signup, and lands the user on `/onboarding` with a subscription row in the database (`active`, or **`trialing`** if the Payment Link includes a free trial).
 - [ ] Abandoned-pay test: pay, close tab, open setup email on another device, complete signup via claim link.

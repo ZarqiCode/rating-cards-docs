@@ -3,7 +3,7 @@ product: rating.cards
 layer: integration
 domains: [billing]
 auto_sync: false
-last_verified: 2026-06-09
+last_verified: 2026-06-11
 ---
 
 # Stripe integration
@@ -20,12 +20,14 @@ Per-location Stripe quantity is **deferred v1**. See [product/multi-location.md]
 ## Pay-before-signup (Payment Link)
 
 1. Owner completes Stripe Checkout from landing page (Payment Link)
-2. **Webhook** (`checkout.session.completed`) records a `pending_checkouts` row and sends a **setup email** to the checkout address (idempotent)
+2. **Webhook** (`checkout.session.completed`) records a `pending_checkouts` row and sends a **setup email** to the checkout address (idempotent). Accepts `payment_status` **`paid`** or **`no_payment_required`** (free trial — card on file, no charge at checkout).
 3. Browser redirect lands on `/checkout/success?session_id=…` → **resolve-checkout-session** exchanges the session for a signed **claim token** (stored in localStorage)
 4. Owner creates account at app.rating.cards (any email or Google — **no match required** with checkout email)
-5. **claim-checkout-session** validates the claim token, provisions `businesses` + `subscriptions`, marks the pending row claimed
+5. **claim-checkout-session** validates the claim token, provisions `businesses` + `subscriptions` (status **`trialing`** or **`active`** from Stripe), marks the pending row claimed
 
 Cross-device recovery: the setup email link (`/signup?claim=…`) carries the same claim token.
+
+**Free trial:** Configure trial days on the Payment Link in Stripe Dashboard (card required). App gates treat **`trialing`** like active. First charge happens when Stripe ends the trial; `customer.subscription.updated` and `invoice.payment_failed` webhooks keep status in sync after claim.
 
 In-app re-subscribe (`create-checkout-session`) is unchanged: authenticated user, `business_id` in metadata, webhook provisions immediately.
 
@@ -45,6 +47,7 @@ Settings → Billing opens Stripe Customer Portal for payment method updates, ca
 
 ## Changelog
 
+- 2026-06-11: Payment Link free trial support (`no_payment_required` checkout sessions; `trialing` subscription status)
 - 2026-06-09: Payment Link claim tokens, pending_checkouts, setup email recovery, resolve-checkout-session
 - 2026-05-30: Note shop hardware lane in shop/payments.md (separate webhook)
 - 2026-05-19: Initial integration doc; flat account billing for v1
