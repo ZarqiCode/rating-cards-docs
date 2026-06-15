@@ -3,7 +3,7 @@ product: rating.cards
 layer: architecture
 domains: [admin, multi-location]
 auto_sync: true
-last_verified: 2026-06-14
+last_verified: 2026-06-15
 ---
 
 # System overview
@@ -35,9 +35,9 @@ last_verified: 2026-06-14
 ## Storefront data model (summary)
 
 - **Business** — organisation; links to user account after subscription; optional `checkout_email` from Stripe
-- **Storefront / location** — GBP location imported per business; soft-deactivate in v1
+- **Storefront / location** — GBP location imported per business; soft-deactivate in v1; carries the pre-connection review baseline as `imported_review_count` + `imported_rating_sum`
 - **Devices** — organisation-scoped in v1; `public_id`, `status`, `destination_url`
-- **Reviews** — synced per storefront from GBP; `ai_reply_status`, `posted_via` (`auto` | `sms_approved` | `sms_custom`)
+- **Reviews** — only reviews that arrive after a storefront connects are stored as rows (`ai_reply_status`, `posted_via`: `auto` | `sms_approved` | `sms_custom`). Historical reviews are not stored as rows; the first import persists their count and rating sum on the location, and lifetime totals/averages blend that baseline with live review rows
 - **Brand voice settings** — per-business AI personality; `auto_respond_enabled` (opt-in hybrid mode)
 - **Manager verification** — per-storefront phone lines with async OTP flow
 
@@ -79,6 +79,7 @@ Shared prompt logic for `respond-to-review` and `demo-respond` lives in `_shared
 
 ## Changelog
 
+- 2026-06-15: Historical reviews no longer stored as rows — `google-import-reviews` persists a per-location baseline (`imported_review_count`, `imported_rating_sum`); `is_initial_import` column dropped; lifetime totals/averages blend baseline with live rows
 - 2026-06-14: `respond-to-review` temporary no-text cap — star-only reviews rated ≥4 marked `skipped` before draft generation
 - 2026-06-12: `demo-respond` edge function + `_shared/brand-voice-prompt.ts`; admin AI Demo tab
 - 2026-06-09: Payment Link claim flow — pending_checkouts, resolve-checkout-session, setup email

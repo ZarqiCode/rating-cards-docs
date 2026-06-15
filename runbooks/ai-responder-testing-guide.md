@@ -56,7 +56,7 @@ Replace `<BUSINESS_ID>` in all SQL below with the `business_id` from this query.
 **Expected**: AI generates a warm reply, status set to `posted` (dry-run skips Google PUT).
 
 ```sql
-INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, is_initial_import, has_owner_reply)
+INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, has_owner_reply)
 VALUES (
   '<BUSINESS_ID>',
   'test-positive-5star-' || gen_random_uuid(),
@@ -64,7 +64,6 @@ VALUES (
   5,
   'Amazing coffee and the staff was so friendly! Will definitely be back.',
   now(),
-  false,
   false
 );
 ```
@@ -74,7 +73,7 @@ VALUES (
 **Expected**: AI generates a balanced reply, status set to `posted`.
 
 ```sql
-INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, is_initial_import, has_owner_reply)
+INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, has_owner_reply)
 VALUES (
   '<BUSINESS_ID>',
   'test-mid-3star-' || gen_random_uuid(),
@@ -82,7 +81,6 @@ VALUES (
   3,
   'Coffee was decent but the place was quite noisy. Might try again on a quieter day.',
   now(),
-  false,
   false
 );
 ```
@@ -92,7 +90,7 @@ VALUES (
 **Expected**: AI generates an empathetic draft, status set to `draft`, negative alert email sent WITH the AI draft and "Approve & Post" button.
 
 ```sql
-INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, is_initial_import, has_owner_reply)
+INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, has_owner_reply)
 VALUES (
   '<BUSINESS_ID>',
   'test-negative-1star-' || gen_random_uuid(),
@@ -100,7 +98,6 @@ VALUES (
   1,
   'Waited 30 minutes and the coffee was cold. Very disappointing service.',
   now(),
-  false,
   false
 );
 ```
@@ -112,7 +109,7 @@ VALUES (
 **Expected**: AI generates a short thank-you even though there is no review text.
 
 ```sql
-INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, is_initial_import, has_owner_reply)
+INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, has_owner_reply)
 VALUES (
   '<BUSINESS_ID>',
   'test-notext-4star-' || gen_random_uuid(),
@@ -120,7 +117,6 @@ VALUES (
   4,
   '',
   now(),
-  false,
   false
 );
 ```
@@ -130,7 +126,7 @@ VALUES (
 **Expected**: Trigger fires but `respond-to-review` sees `has_owner_reply = true` and sets status to `skipped`.
 
 ```sql
-INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, is_initial_import, has_owner_reply)
+INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, has_owner_reply)
 VALUES (
   '<BUSINESS_ID>',
   'test-ownerreply-' || gen_random_uuid(),
@@ -138,27 +134,18 @@ VALUES (
   5,
   'Loved it!',
   now(),
-  false,
   true
 );
 ```
 
-### Test 6: Initial import review — trigger should NOT fire
+### Test 6: Initial import — no rows created (baseline only)
 
-**Expected**: No trigger fires, no AI processing at all.
+**Expected**: Historical reviews are no longer stored as rows. `google-import-reviews` records a per-location baseline (`locations.imported_review_count`, `imported_rating_sum`) on first import instead of inserting review rows, so there is nothing for the trigger to fire on. To verify the baseline after an import:
 
 ```sql
-INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, is_initial_import, has_owner_reply)
-VALUES (
-  '<BUSINESS_ID>',
-  'test-import-' || gen_random_uuid(),
-  'Old Reviewer',
-  5,
-  'Great place!',
-  '2025-01-15T10:00:00Z',
-  true,
-  false
-);
+SELECT id, name, imported_review_count, imported_rating_sum, initial_import_completed_at
+FROM locations
+WHERE business_id = '<BUSINESS_ID>';
 ```
 
 ### Test 7: Business without brand voice — should skip
@@ -178,7 +165,7 @@ Create a review for a business that has no row in `subscriptions` (or status = `
 **Expected**: Same as Test 3 but at 2-star threshold. Validates the rating boundary.
 
 ```sql
-INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, is_initial_import, has_owner_reply)
+INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, has_owner_reply)
 VALUES (
   '<BUSINESS_ID>',
   'test-negative-2star-' || gen_random_uuid(),
@@ -186,7 +173,6 @@ VALUES (
   2,
   'The latte art was nice but the espresso was way too bitter. Not worth the price.',
   now(),
-  false,
   false
 );
 ```
@@ -196,7 +182,7 @@ VALUES (
 **Expected**: AI detects the language and replies in the same language.
 
 ```sql
-INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, is_initial_import, has_owner_reply)
+INSERT INTO reviews (business_id, google_review_id, reviewer_name, rating, review_text, review_date, has_owner_reply)
 VALUES (
   '<BUSINESS_ID>',
   'test-spanish-' || gen_random_uuid(),
@@ -204,7 +190,6 @@ VALUES (
   5,
   'El mejor cafe de la ciudad! El ambiente es increible y los baristas son muy amables.',
   now(),
-  false,
   false
 );
 ```
@@ -322,7 +307,6 @@ SELECT
   ai_reply_status,
   ai_reply_sent_at,
   has_owner_reply,
-  is_initial_import,
   created_at
 FROM reviews
 WHERE business_id = '<BUSINESS_ID>'
