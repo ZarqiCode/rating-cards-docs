@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [onboarding, sms, billing, multi-location, managers]
 auto_sync: true
-last_verified: 2026-06-14
+last_verified: 2026-06-15
 ---
 
 # Owner flows
@@ -22,7 +22,7 @@ last_verified: 2026-06-14
 
 After signup, guided flow:
 
-1. **Google connection** — OAuth once; **checkbox list of GBP storefronts** (always shown, even for a single location); organisation name auto-filled from GBP account on first import. A second Google login is optional later under **Settings → Google accounts** (info icon on step 1 explains this).
+1. **Google connection** — Sign in with the Google account where the owner’s Google Business Profile (GBP) is set up; OAuth once; **checkbox list of GBP storefronts** (always shown, even for a single location); organisation name auto-filled from GBP account on first import. A second Google login is optional later under **Settings → Google accounts** (info icon on step 1 explains this).
 2. **Brand voice (required)** — single-page form: business type, formality, emoji preference, criticism handling, and sign-off; optional “sound even more like you” block (voice samples, phrases, words to avoid); shared profile for AI drafts across all storefronts; optional **auto-respond** toggle (4–5 star reviews auto-post when enabled; 1–3 star still SMS). Cannot skip.
 3. **Per-store SMS activation** — per-location checklist with status badges (Not started / Pending verification / Verified / Set up later); manager phone numbers, TCPA consent (`sms_v2` checkbox + Privacy/Terms links); **async** verification via public link + OTP; CEO must decide per storefront before continuing; verification not required to finish onboarding
 4. **Review & finish** — honest status headline (4 tiers) plus per-storefront SMS summary; Autopilot live per storefront as manager lines verify
@@ -89,6 +89,7 @@ Organisation-level email every Monday. SMS handles moment-to-moment; pulse handl
 
 ## Changelog
 
+- 2026-06-15: Onboarding step 1 copy — explicit instruction to sign in with the Google account where GBP is set up
 - 2026-06-14: Temporary no-text cap — star-only 4–5 star reviews skipped (no auto-post, no SMS); 1–3 star star-only still routes to SMS approval
 - 2026-06-10: Copy alignment — verification gating doc matches code (4–5 star auto-post without verified SMS when auto-respond on); manager SMS vs negative-review drafts wording
 - 2026-06-12: Brand voice v2 — expression-focused fields (business type, formality, emoji, criticism, sign-off); optional voice samples/phrases/avoid list; removed personality tags and response length
