@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [devices, sms, gbp, email, onboarding]
 auto_sync: true
-last_verified: 2026-06-12
+last_verified: 2026-06-14
 ---
 
 # Product capabilities
@@ -31,6 +31,7 @@ Philosophy: hospitality owners should rarely log into a dashboard. Day-to-day ru
 - **Hybrid auto-respond (opt-in):** when enabled, **4–5 star** reviews are AI-drafted and posted to Google automatically; **1–3 star** reviews always go through SMS approval
 - Surfaces drafts to **verified manager** via SMS for reviews that need human approval (no app login)
 - **Gating:** unverified storefronts sync reviews only — no AI drafts or alert SMS (positive auto-post does not require SMS contact when auto-respond is on)
+- **No-text reviews (temporary cap):** star-only **4–5 star** reviews are skipped entirely — no draft, no auto-post, no SMS (a generic reply to a rating-only review adds no value); star-only **1–3 star** reviews still go through SMS approval so the manager can reply in their own words
 - Manager approves, writes own reply, or skips via SMS
 - Approved replies post to correct GBP listing; `posted_via` tracks auto vs SMS-approved vs SMS-custom
 - Sentiment and star rating calibrate tone
@@ -40,7 +41,7 @@ Philosophy: hospitality owners should rarely log into a dashboard. Day-to-day ru
 
 ### SMS notification bot
 
-For each **verified** storefront, **1–3 star** reviews (or all reviews when auto-respond is off) trigger SMS to that location's manager with review content and AI draft when enabled.
+For each **verified** storefront, **1–3 star** reviews (or all reviews when auto-respond is off) trigger SMS to that location's manager with review content and AI draft when enabled. **Exception (temporary):** star-only **4–5 star** reviews never trigger SMS — they are skipped regardless of the auto-respond setting.
 
 ### Auto-queue
 
@@ -76,6 +77,7 @@ Dashboard is secondary to SMS for day-to-day approvals. See [multi-location.md](
 
 ## Changelog
 
+- 2026-06-14: Temporary no-text cap — star-only 4–5 star reviews are skipped entirely (no draft, auto-post, or SMS); star-only 1–3 star reviews still route to SMS approval
 - 2026-06-12: Brand voice v2 — configurable business type, formality, emoji; optional voice samples replace hardcoded few-shot examples; dropped personality tags and response length
 - 2026-06-12: AI review responder — hardcoded human-voice rules, rewritten few-shot examples, newline sign-off (no em dash)
 - 2026-06-07: Hybrid auto-respond — opt-in 4–5 star auto-post; SMS only for 1–3 star when enabled

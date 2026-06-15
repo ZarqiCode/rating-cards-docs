@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [onboarding, sms, billing, multi-location, managers]
 auto_sync: true
-last_verified: 2026-06-12
+last_verified: 2026-06-14
 ---
 
 # Owner flows
@@ -43,9 +43,9 @@ Managers receive SMS with link to **`/verify-sms/:token`**. OTP confirmation ver
 
 ## Day-to-day: SMS approval loop
 
-For verified storefronts, managers receive SMS on **1–3 star** reviews (and on all reviews when auto-respond is off). Two-tap approve, write own reply, or skip. Queue handles backlog. CEOs do not need to participate in SMS thread unless they are also the verified manager.
+For verified storefronts, managers receive SMS on **1–3 star** reviews (and on all reviews when auto-respond is off). Two-tap approve, write own reply, or skip. Queue handles backlog. CEOs do not need to participate in SMS thread unless they are also the verified manager. **Temporary exception:** star-only **4–5 star** reviews (no comment text) are skipped entirely and never generate an SMS, since there is nothing to reply to.
 
-When **auto-respond** is enabled in Brand voice (Settings or onboarding), **4–5 star** reviews get an AI reply posted to Google automatically — no SMS. **1–3 star** reviews always go through the SMS approval loop and require a verified manager line.
+When **auto-respond** is enabled in Brand voice (Settings or onboarding), **4–5 star** reviews get an AI reply posted to Google automatically — no SMS. **1–3 star** reviews always go through the SMS approval loop and require a verified manager line. Star-only **4–5 star** reviews are the exception: they are skipped entirely (no auto-post, no SMS) under the temporary no-text cap.
 
 ## Overview (CEO home)
 
@@ -89,6 +89,7 @@ Organisation-level email every Monday. SMS handles moment-to-moment; pulse handl
 
 ## Changelog
 
+- 2026-06-14: Temporary no-text cap — star-only 4–5 star reviews skipped (no auto-post, no SMS); 1–3 star star-only still routes to SMS approval
 - 2026-06-10: Copy alignment — verification gating doc matches code (4–5 star auto-post without verified SMS when auto-respond on); manager SMS vs negative-review drafts wording
 - 2026-06-12: Brand voice v2 — expression-focused fields (business type, formality, emoji, criticism, sign-off); optional voice samples/phrases/avoid list; removed personality tags and response length
 - 2026-06-07: Onboarding reorder — Google → brand voice (required) → SMS activation checklist → honest finish; 3-segment progress bar

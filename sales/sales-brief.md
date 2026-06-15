@@ -52,7 +52,7 @@
 
 ### Per storefront (when manager verified)
 
-- **Auto-respond (opt-in):** 4–5 star reviews get AI reply posted automatically — managers never see an SMS
+- **Auto-respond (opt-in):** 4–5 star reviews *with a written comment* get AI reply posted automatically — managers never see an SMS (star-only ratings with no text are left alone for now)
 - **1–3 star reviews** (or all reviews when auto-respond off) → SMS to that store's manager with AI draft
 - Manager approves, writes own reply, or skips — all via SMS
 - Queue clears overnight backlogs in one thread
@@ -124,6 +124,7 @@ Cards, stickers, stands, posters — NFC + QR, one-time purchase. We configure a
 
 ## Changelog
 
+- 2026-06-14: Temporary no-text cap — star-only 5-star ratings (no comment) are left alone for now; auto-respond covers 4–5 star reviews that include written text
 - 2026-06-12: Brand voice v2 — owners set business type, formality, and emoji; optional real reply samples teach the AI their voice (no personality-tag wizard)
 - 2026-06-12: Objection handler — AI replies use hardcoded human-voice guardrails, not generic corporate tone
 - 2026-06-10: Onboarding table reorder (Google → brand voice → manager SMS); gating copy matches code; Settings → Storefronts; Overview wording

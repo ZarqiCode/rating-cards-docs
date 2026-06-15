@@ -3,7 +3,7 @@ product: rating.cards
 layer: architecture
 domains: [admin, multi-location]
 auto_sync: true
-last_verified: 2026-06-12
+last_verified: 2026-06-14
 ---
 
 # System overview
@@ -52,7 +52,7 @@ See [product/multi-location.md](../product/multi-location.md) for v1 boundaries.
 | `demo-respond` | Admin-only AI reply preview — fetches `brand_voice_settings` by `business_id`, no DB writes |
 | `google-auth-url`, `google-callback`, `google-import-reviews` | GBP OAuth and location import |
 | `sync-reviews` | Scheduled/manual review sync |
-| `send-review-sms`, `handle-sms-reply`, `approve-reply`, `respond-to-review` | SMS review workflow; `respond-to-review` branches on `shouldAutoRespond()` — auto-posts 4–5 star when `auto_respond_enabled`, else SMS handoff |
+| `send-review-sms`, `handle-sms-reply`, `approve-reply`, `respond-to-review` | SMS review workflow; `respond-to-review` branches on `shouldAutoRespond()` — auto-posts 4–5 star when `auto_respond_enabled`, else SMS handoff. **Temporary cap:** star-only (empty `review_text`) reviews rated ≥4 are marked `skipped` before any draft — no auto-post, no SMS |
 | `create-sms-verification`, `verify-sms-public`, `send-otp-sms`, `verify-otp-sms` | Manager phone verification |
 | `create-checkout-session`, `resolve-checkout-session`, `claim-checkout-session`, `stripe-webhook`, `create-portal-session` | Billing |
 | `send-weekly-pulse`, `send-negative-alert` | Email |
@@ -79,6 +79,7 @@ Shared prompt logic for `respond-to-review` and `demo-respond` lives in `_shared
 
 ## Changelog
 
+- 2026-06-14: `respond-to-review` temporary no-text cap — star-only reviews rated ≥4 marked `skipped` before draft generation
 - 2026-06-12: `demo-respond` edge function + `_shared/brand-voice-prompt.ts`; admin AI Demo tab
 - 2026-06-09: Payment Link claim flow — pending_checkouts, resolve-checkout-session, setup email
 - 2026-06-07: Hybrid auto-respond — `auto_respond_enabled`, `posted_via`, `shouldAutoRespond()` routing in `respond-to-review`
