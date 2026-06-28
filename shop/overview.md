@@ -3,7 +3,7 @@ product: rating.cards
 layer: product
 domains: [shop]
 auto_sync: true
-last_verified: 2026-05-30
+last_verified: 2026-06-25
 ---
 
 # Shop overview
@@ -15,6 +15,8 @@ The **shop** is a separate front-end at **`shop.rating.cards`** (`rating-cards-s
 ## Status (2026-05-30)
 
 **Catalog, cart, Places picker, and Stripe checkout shipped** in `rating-cards-shop`: Next.js 16, product pages, `localStorage` cart with per-line Google Places data, hosted Stripe Checkout, success/cancel routes, and shop edge functions.
+
+**Homepage (`/`)** — marketing landing with hero, benefit cards, client results, Autopilot teaser, FAQ, and closing CTA; includes the shoppable product grid (`#shop`) on the same page. `/hardware` and `/software` routes are planned; not shipped in this repo yet.
 
 **Stripe Dashboard + secrets** — follow [runbooks/shop-stripe-setup.md](../runbooks/shop-stripe-setup.md) to configure Test/Live products, webhooks, and Supabase secrets before first live order.
 
@@ -58,6 +60,7 @@ Autopilot subscription stays on the landing / app Stripe flow — see [integrati
 
 ## Changelog
 
+- 2026-06-25: Homepage repurposed as marketing landing + embedded shop grid (benefit cards, pilot results, Autopilot teaser, FAQ, closing CTA).
 - 2026-05-30: Stripe checkout, edge functions, and fulfillment idempotency shipped
 - 2026-05-30: Split from `product/shop.md`; payments and fulfillment moved to dedicated shop docs
 - 2026-05-27: GBP picker on product pages; catalog and cart shipped
