@@ -32,6 +32,7 @@ The **shop** is a separate front-end at **`shop.rating.cards`** (`rating-cards-s
 | Checkout | Stripe Checkout Sessions (hosted), tax + shipping, guest only | [payments.md](./payments.md) |
 | After payment | Internal email to hello@rating.cards; Antonio fulfills from device stock | [fulfillment.md](./fulfillment.md) |
 | Thank-you | Buyer confirmation; sets expectation for team follow-up | [fulfillment.md](./fulfillment.md) |
+| Legal | Privacy Policy and Terms of Service at `/privacy` and `/terms`; content loaded from `docs/legal/` submodule at build time; linked from footer and checkout cart | [privacy-policy.md](../legal/privacy-policy.md), [terms-of-service.md](../legal/terms-of-service.md) |
 
 Autopilot subscription stays on the landing / app Stripe flow — see [integrations/stripe.md](../integrations/stripe.md).
 
@@ -62,6 +63,7 @@ Autopilot subscription stays on the landing / app Stripe flow — see [integrati
 
 ## Changelog
 
+- 2026-06-28: Shop hosts Privacy Policy (`/privacy`) and Terms of Service (`/terms`) from docs submodule; footer and cart link internally instead of www.rating.cards.
 - 2026-06-28: Mobile-responsive shop UX — header Shop link, sticky mobile purchase bar on product pages, improved tap targets and layout stacking on small screens.
 - 2026-06-25: Homepage repurposed as marketing landing + embedded shop grid (benefit cards, pilot results, Autopilot teaser, FAQ, closing CTA).
 - 2026-05-30: Stripe checkout, edge functions, and fulfillment idempotency shipped
